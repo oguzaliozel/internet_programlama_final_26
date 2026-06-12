@@ -826,6 +826,16 @@
         </div>
     </div>
 
+    <!-- Yükleme Ekranı (Loading Screen) -->
+    <div id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0b1120; z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease;">
+        <div class="spinner" style="width: 60px; height: 60px; border: 4px solid rgba(255, 215, 0, 0.1); border-top-color: #ffd700; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px;"></div>
+        <style>
+            @keyframes spin { 100% { transform: rotate(360deg); } }
+        </style>
+        <h2 id="loading-text" style="color: #ffd700; font-family: 'Inter', sans-serif; letter-spacing: 2px; margin: 0; font-size: 18px;">3D Oda Yükleniyor... %0</h2>
+        <p style="color: #b0b0cf; font-size: 12px; margin-top: 10px;">Lütfen bekleyin (Hızlı yükleme için sıkıştırılmış model indiriliyor)</p>
+    </div>
+
     <!-- Hayallerim Modalı -->
     <div id="dreams-modal" class="modal">
         <div class="modal-content" style="border-color: #ffd700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.05);">
@@ -999,6 +1009,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
@@ -1161,11 +1172,15 @@
             return g.includes("poster") || g.includes("picture") || g.includes("fotos") || g.includes("luffy");
         }
 
-        // BURADA SADECE ODA.GLB YÜKLENİYOR, ESKİ DUVARLAR SİLİNDİ
+        // DRACO LOADER EKLEMESİ: Sıkıştırılmış modeli çok daha hızlı yüklemek için
+        const dracoLoader = new THREE.DRACOLoader();
+        dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/libs/draco/');
+        
         const loader = new THREE.GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
         let odaModeli = null;
 
-        loader.load('oda.glb', (gltf) => {
+        loader.load('oda_draco.glb', (gltf) => {
             odaModeli = gltf.scene;
 
             // GLB materyallerini düzelt
@@ -1294,7 +1309,21 @@
             controls.update();
             setLampEmissive(isNight);
             initAutoplay();
-        }, undefined, (error) => {
+            
+            // Modeli yükleme bittiğinde Loading ekranını gizle
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => loadingScreen.style.display = 'none', 500);
+            }
+        }, (xhr) => {
+            // Yükleme yüzdesini güncelle
+            if (xhr.lengthComputable) {
+                const percent = Math.round((xhr.loaded / xhr.total) * 100);
+                const loadingText = document.getElementById('loading-text');
+                if (loadingText) loadingText.innerText = `3D Oda Yükleniyor... %${percent}`;
+            }
+        }, (error) => {
             console.error("Model yüklenirken hata:", error);
             const div = document.createElement('div');
             div.style.position = 'absolute'; div.style.bottom = '50px'; div.style.right = '20px';
