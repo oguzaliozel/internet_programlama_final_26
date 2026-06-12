@@ -1318,10 +1318,16 @@
             }
         }, (xhr) => {
             // Yükleme yüzdesini güncelle
-            if (xhr.lengthComputable) {
-                const percent = Math.round((xhr.loaded / xhr.total) * 100);
-                const loadingText = document.getElementById('loading-text');
-                if (loadingText) loadingText.innerText = `3D Oda Yükleniyor... %${percent}`;
+            const loadingText = document.getElementById('loading-text');
+            if (loadingText) {
+                if (xhr.lengthComputable && xhr.total > 0) {
+                    const percent = Math.round((xhr.loaded / xhr.total) * 100);
+                    loadingText.innerText = `3D Oda Yükleniyor... %${percent}`;
+                } else {
+                    // GitHub Pages bazen toplam dosya boyutunu gizleyebilir, bu durumda inen MB'ı gösterelim
+                    const downloadedMB = (xhr.loaded / (1024 * 1024)).toFixed(1);
+                    loadingText.innerText = `3D Oda Yükleniyor... (${downloadedMB} MB İndirildi)`;
+                }
             }
         }, (error) => {
             console.error("Model yüklenirken hata:", error);
