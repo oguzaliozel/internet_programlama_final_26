@@ -1381,8 +1381,10 @@
                     catGroup.scale.set(targetScale, targetScale, targetScale);
                 }
 
-                // Kediyi tam yatağın ÜSTÜNE koyalım (Y eksenini 0.9 yaptık ki yorganın içinde kalmasın)
-                catGroup.position.set(-1.2, 0.9, -0.5); 
+                // Kediyi oyuncağın yanına (Yatağın üstüne) koyalım
+                catGroup.position.set(-0.8, 0.9, -1.2); 
+                // Kediyi bize doğru (kameraya) döndürelim
+                catGroup.rotation.y = Math.PI / 1.2;
 
                 odaModeli.add(catGroup);
 
@@ -1496,6 +1498,9 @@
                     else if (isMatch("chair") || isMatch("koltuk")) {
                         triggerObjectInteraction("chair");
                     }
+                    else if (isMatch("domo") || isMatch("toy")) {
+                        triggerObjectInteraction("domo");
+                    }
                     else if (isMatch("poster") || isMatch("fotos") || isMatch("picture") || isMatch("luffy")) {
                         triggerObjectInteraction("poster");
                     }
@@ -1597,6 +1602,16 @@
                         openAmpModal();
                         if (!isAmpPlaying) playRadioTrack(0);
                     }
+                },
+                domo: {
+                    title: "Canavar Oyuncak",
+                    desc: "Şila'nın en sevdiği oyuncak! Geceleri yatağın üstünde nöbet tutuyor ve Şila'ya eşlik ediyor. 👾",
+                    action: () => console.log("Domo tıklandı")
+                },
+                ukulele: {
+                    title: "Ahşap Ukulele",
+                    desc: "Boş zamanlarımda amatör olarak çaldığım ufak ukulele.",
+                    action: () => console.log("Ukulele tıklandı")
                 },
                 poster: {
                     title: "Poster Köşesi",
