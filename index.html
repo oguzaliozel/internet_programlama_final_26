@@ -1381,10 +1381,10 @@
                     catGroup.scale.set(targetScale, targetScale, targetScale);
                 }
 
-                // Kediyi oyuncağın yanına (Yatağın üstüne) koyalım
-                catGroup.position.set(-0.8, 0.9, -1.2); 
-                // Kediyi bize doğru (kameraya) döndürelim
-                catGroup.rotation.y = Math.PI / 1.2;
+                // Kediyi oyuncağın YANINA (sol tarafa) alalım
+                catGroup.position.set(-1.6, 0.9, -1.2); 
+                // Kediyi bize doğru (kameraya) tam döndürelim (Radyan cinsinden açı)
+                catGroup.rotation.y = Math.PI / 3;
 
                 odaModeli.add(catGroup);
 
