@@ -1327,8 +1327,6 @@
                         node.receiveShadow = true;
                         node.userData.isInteractive = true;
                         node.userData.logicalGroup = 'cat';
-                        node.userData.originalScale = node.scale.clone();
-                        node.userData.targetScale = node.scale.clone();
                         
                         // Kediye parlaklık materyali ekle (hover için)
                         if (node.material) {
@@ -1341,10 +1339,41 @@
                     }
                 });
                 
-                // Kediyi ortada bir yere koyalım
-                catModel.scale.set(0.1, 0.1, 0.1); 
-                catModel.position.set(0, 0, 0); 
-                odaModeli.add(catModel);
+                // Kediyi ortala ve normalize et
+                const catBox = new THREE.Box3().setFromObject(catModel);
+                const catSize = new THREE.Vector3();
+                catBox.getSize(catSize);
+                const catCenter = new THREE.Vector3();
+                catBox.getCenter(catCenter);
+
+                // Geometriyi merkeze çek (Pivot noktasını düzelt)
+                catModel.position.set(-catCenter.x, -catBox.min.y, -catCenter.z);
+
+                // Ana grup oluşturup ölçek ve konum verelim
+                const catGroup = new THREE.Group();
+                catGroup.add(catModel);
+
+                // Kedinin odadaki hedef boyutu (0.8 birim)
+                const maxDim = Math.max(catSize.x, catSize.y, catSize.z);
+                if (maxDim > 0) {
+                    const targetScale = 0.8 / maxDim;
+                    catGroup.scale.set(targetScale, targetScale, targetScale);
+                }
+
+                // Kediyi yatağın/masanın olduğu tarafa doğru yerleştir (Odanın zemini Y=0)
+                // Orijinal oda merkezde olduğu için tahmini bir yere koyalım:
+                catGroup.position.set(0, 0, 1.5); 
+
+                odaModeli.add(catGroup);
+
+                // Etkileşim için scale değerlerini grubun userData'sına kaydet
+                catGroup.traverse((node) => {
+                    if (node.isMesh) {
+                        node.userData.originalScale = catGroup.scale.clone();
+                        node.userData.targetScale = catGroup.scale.clone();
+                    }
+                });
+
             }, undefined, (err) => console.error("Kedi yüklenemedi", err));
             
             // Modeli yükleme bittiğinde Loading ekranını gizle
