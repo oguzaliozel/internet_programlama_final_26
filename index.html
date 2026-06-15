@@ -1374,15 +1374,15 @@
                 const catGroup = new THREE.Group();
                 catGroup.add(catModel);
 
-                // Kedinin odadaki hedef boyutu (Yatağa uygun olması için 0.8)
+                // Kedinin odadaki hedef boyutu (Yatağa uygun olması için 1.2)
                 const maxDim = Math.max(catSize.x, catSize.y, catSize.z);
                 if (maxDim > 0) {
-                    const targetScale = 0.8 / maxDim;
+                    const targetScale = 1.2 / maxDim;
                     catGroup.scale.set(targetScale, targetScale, targetScale);
                 }
 
-                // Kediyi tam yatağın üstüne koyalım (Tahmini yatak koordinatı: X=-1.2, Y=0.65, Z=-0.8)
-                catGroup.position.set(-1.2, 0.65, -0.8); 
+                // Kediyi yatağın dibine, halının üstüne koyalım (Tahmini boşluk: X=-1.0, Y=0.05, Z=1.0)
+                catGroup.position.set(-1.0, 0.05, 1.0); 
 
                 odaModeli.add(catGroup);
 
