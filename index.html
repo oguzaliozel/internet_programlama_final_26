@@ -541,6 +541,14 @@
             
             <!-- Menü Öğeleri Listesi -->
             <div style="display: flex; flex-direction: column; gap: 8px;" id="sidebar-items-list">
+                <div class="sidebar-item" data-key="lamp" title="Oda Işığı">
+                    <span class="icon">💡</span>
+                    <span class="label">Başucu Lambası</span>
+                </div>
+                <div class="sidebar-item" data-key="cat" title="Odanın Kedisi">
+                    <span class="icon">🐈</span>
+                    <span class="label">Odanın Kedisi</span>
+                </div>
                 <button class="sidebar-item" data-key="workstation_monitor">
                     <span style="font-size: 16px;">💻</span>
                     <div style="display: flex; flex-direction: column;">
@@ -1310,6 +1318,35 @@
             setLampEmissive(isNight);
             initAutoplay();
             
+            // KEDİ MODELİNİ YÜKLE
+            loader.load('kedi_draco.glb', (catGltf) => {
+                const catModel = catGltf.scene;
+                catModel.traverse((node) => {
+                    if (node.isMesh) {
+                        node.castShadow = true;
+                        node.receiveShadow = true;
+                        node.userData.isInteractive = true;
+                        node.userData.logicalGroup = 'cat';
+                        node.userData.originalScale = node.scale.clone();
+                        node.userData.targetScale = node.scale.clone();
+                        
+                        // Kediye parlaklık materyali ekle (hover için)
+                        if (node.material) {
+                            const mats = Array.isArray(node.material) ? node.material : [node.material];
+                            node.userData.originalEmissives = mats.map(m => ({
+                                color: m.emissive ? m.emissive.clone() : new THREE.Color(0,0,0),
+                                intensity: m.emissiveIntensity !== undefined ? m.emissiveIntensity : 0.0
+                            }));
+                        }
+                    }
+                });
+                
+                // Kediyi ortada bir yere koyalım
+                catModel.scale.set(0.1, 0.1, 0.1); 
+                catModel.position.set(0, 0, 0); 
+                odaModeli.add(catModel);
+            }, undefined, (err) => console.error("Kedi yüklenemedi", err));
+            
             // Modeli yükleme bittiğinde Loading ekranını gizle
             const loadingScreen = document.getElementById('loading-screen');
             if (loadingScreen) {
@@ -1404,6 +1441,9 @@
                     if (group === "workstation_monitor" || group === "laptop" || isMatch("monitor") || isMatch("screen")) {
                         triggerObjectInteraction("workstation_monitor");
                     } 
+                    else if (group === "cat" || isMatch("cat") || isMatch("kedi")) {
+                        triggerObjectInteraction("cat");
+                    }
                     else if (isMatch("chair") || isMatch("koltuk")) {
                         triggerObjectInteraction("chair");
                     }
@@ -1490,6 +1530,15 @@
                     title: "Çalışma İstasyonu",
                     desc: "Projelerimi ve GitHub bağlantımı ekrandaki panelden görebilirsin.",
                     action: () => openProjectModal()
+                },
+                cat: {
+                    title: "Odanın Kedisi",
+                    desc: "Odamızın tatlı misafiri. Beni sevdiğin için teşekkürler! Miyav 🐾",
+                    action: () => {
+                        const meow = new Audio('https://www.myinstants.com/media/sounds/meow.mp3');
+                        meow.volume = 0.5;
+                        meow.play().catch(e => console.log("Audio play prevented"));
+                    }
                 },
                 bed: {
                     title: "Konforlu Yatak",
