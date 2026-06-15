@@ -1374,16 +1374,15 @@
                 const catGroup = new THREE.Group();
                 catGroup.add(catModel);
 
-                // Kedinin odadaki hedef boyutu (2.5 birim - artık kocaman ve görünür olacak!)
+                // Kedinin odadaki hedef boyutu (Yatağa uygun olması için 0.8)
                 const maxDim = Math.max(catSize.x, catSize.y, catSize.z);
                 if (maxDim > 0) {
-                    const targetScale = 2.5 / maxDim;
+                    const targetScale = 0.8 / maxDim;
                     catGroup.scale.set(targetScale, targetScale, targetScale);
                 }
 
-                // Kediyi yatağın/masanın olduğu tarafa doğru yerleştir (Odanın zemini Y=0)
-                // Orijinal oda merkezde olduğu için tahmini bir yere koyalım:
-                catGroup.position.set(0, 0, 1.5); 
+                // Kediyi tam yatağın üstüne koyalım (Tahmini yatak koordinatı: X=-1.2, Y=0.65, Z=-0.8)
+                catGroup.position.set(-1.2, 0.65, -0.8); 
 
                 odaModeli.add(catGroup);
 
@@ -1844,11 +1843,17 @@
         const projCloseBtn = projModal.querySelector('.close-btn');
 
         function openProjectModal() {
-            projModal.classList.add('show');
+            projModal.style.display = 'flex';
+            setTimeout(() => {
+                projModal.classList.add('show');
+            }, 10);
         }
 
         function closeProjectModal() {
             projModal.classList.remove('show');
+            setTimeout(() => {
+                projModal.style.display = 'none';
+            }, 300);
         }
 
         projCloseBtn.addEventListener('click', closeProjectModal);
@@ -1858,11 +1863,17 @@
         const hobCloseBtn = hobModal.querySelector('.close-btn');
 
         function openHobbiesModal() {
-            hobModal.classList.add('show');
+            hobModal.style.display = 'flex';
+            setTimeout(() => {
+                hobModal.classList.add('show');
+            }, 10);
         }
 
         function closeHobbiesModal() {
             hobModal.classList.remove('show');
+            setTimeout(() => {
+                hobModal.style.display = 'none';
+            }, 300);
         }
 
         hobCloseBtn.addEventListener('click', closeHobbiesModal);
@@ -1886,7 +1897,7 @@
         const dreamCloseBtn = dreamModal.querySelector('.close-btn');
 
         function openDreamsModal() {
-            dreamModal.style.display = 'block';
+            dreamModal.style.display = 'flex';
             setTimeout(() => {
                 dreamModal.classList.add('show');
             }, 10);
@@ -1900,7 +1911,7 @@
         }
 
         function openSilaModal() {
-            document.getElementById('sila-modal').style.display = 'block';
+            document.getElementById('sila-modal').style.display = 'flex';
             setTimeout(() => {
                 document.getElementById('sila-modal').classList.add('show');
             }, 10);
