@@ -891,6 +891,27 @@
         </div>
     </div>
 
+    <!-- Şila Modalı -->
+    <div id="sila-modal" class="modal">
+        <div class="modal-content" style="border-color: #ffb6c1; box-shadow: 0 0 30px rgba(255, 182, 193, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.05); max-width: 600px;">
+            <span class="close-btn" onclick="closeSilaModal()">&times;</span>
+            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                <span style="font-size: 32px;">🐾</span>
+                <h2 style="margin: 0; color: #ffb6c1; text-shadow: 0 0 10px rgba(255,182,193,0.5);">Şila'nın Köşesi</h2>
+            </div>
+            <p style="color: #b0b0cf; font-size: 15px; line-height: 1.6; margin-bottom: 25px;">
+                Odamızın en tatlı sakini Şila ile tanışın! O bir <strong>Ragdoll</strong> kedisi. Karakteri tıpkı cinsi gibi; inanılmaz sakin, uysal ve sevecen. En sevdiği aktivite yumuşak battaniyesinin üzerinde saatlerce uyumak ve dinlenmek. Odanın bu huzurlu atmosferinin en büyük tamamlayıcısı o.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <img src="assets/sila_1.jpg" style="width: 100%; border-radius: 12px; border: 1px solid rgba(255,182,193,0.2); aspect-ratio: 1; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <img src="assets/sila_2.png" style="width: 100%; border-radius: 12px; border: 1px solid rgba(255,182,193,0.2); aspect-ratio: 1; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <img src="assets/sila_3.png" style="width: 100%; border-radius: 12px; border: 1px solid rgba(255,182,193,0.2); aspect-ratio: 1; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+                <img src="assets/sila_4.jpg" style="width: 100%; border-radius: 12px; border: 1px solid rgba(255,182,193,0.2); aspect-ratio: 1; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+            </div>
+        </div>
+    </div>
+
     <!-- Marshall Amfi & Müzik Kutusu Modalı -->
     <div id="amp-modal" class="modal">
         <div class="modal-content" style="border-color: #ffd700; box-shadow: 0 0 30px rgba(255, 215, 0, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.05); max-width: 500px;">
@@ -1353,10 +1374,10 @@
                 const catGroup = new THREE.Group();
                 catGroup.add(catModel);
 
-                // Kedinin odadaki hedef boyutu (0.8 birim)
+                // Kedinin odadaki hedef boyutu (2.5 birim - artık kocaman ve görünür olacak!)
                 const maxDim = Math.max(catSize.x, catSize.y, catSize.z);
                 if (maxDim > 0) {
-                    const targetScale = 0.8 / maxDim;
+                    const targetScale = 2.5 / maxDim;
                     catGroup.scale.set(targetScale, targetScale, targetScale);
                 }
 
@@ -1561,13 +1582,9 @@
                     action: () => openProjectModal()
                 },
                 cat: {
-                    title: "Odanın Kedisi",
-                    desc: "Odamızın tatlı misafiri. Beni sevdiğin için teşekkürler! Miyav 🐾",
-                    action: () => {
-                        const meow = new Audio('https://www.myinstants.com/media/sounds/meow.mp3');
-                        meow.volume = 0.5;
-                        meow.play().catch(e => console.log("Audio play prevented"));
-                    }
+                    title: "Şila'nın Köşesi",
+                    desc: "Odamızın tatlı misafiri Şila. Onun fotoğraflarını ve hikayesini görmek için tıkla! 🐾",
+                    action: () => openSilaModal()
                 },
                 bed: {
                     title: "Konforlu Yatak",
@@ -1869,11 +1886,36 @@
         const dreamCloseBtn = dreamModal.querySelector('.close-btn');
 
         function openDreamsModal() {
-            dreamModal.classList.add('show');
+            dreamModal.style.display = 'block';
+            setTimeout(() => {
+                dreamModal.classList.add('show');
+            }, 10);
         }
 
         function closeDreamsModal() {
             dreamModal.classList.remove('show');
+            setTimeout(() => {
+                dreamModal.style.display = 'none';
+            }, 300);
+        }
+
+        function openSilaModal() {
+            document.getElementById('sila-modal').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('sila-modal').classList.add('show');
+            }, 10);
+            
+            // Miyav sesi
+            const meow = new Audio('https://www.myinstants.com/media/sounds/meow.mp3');
+            meow.volume = 0.5;
+            meow.play().catch(e => console.log("Audio play prevented"));
+        }
+
+        function closeSilaModal() {
+            document.getElementById('sila-modal').classList.remove('show');
+            setTimeout(() => {
+                document.getElementById('sila-modal').style.display = 'none';
+            }, 300);
         }
 
         dreamCloseBtn.addEventListener('click', closeDreamsModal);
@@ -1911,6 +1953,13 @@
             }
             if (e.target === dreamModal) {
                 closeDreamsModal();
+            }
+            if (e.target === document.getElementById('sila-modal')) {
+                closeSilaModal();
+            }
+            if (e.target === document.getElementById('amp-modal')) {
+                document.getElementById('amp-modal').classList.remove('show');
+                setTimeout(() => { document.getElementById('amp-modal').style.display = 'none'; }, 300);
             }
             if (e.target === detailModal) {
                 closeProjectDetailModal();
