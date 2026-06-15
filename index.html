@@ -1381,8 +1381,8 @@
                     catGroup.scale.set(targetScale, targetScale, targetScale);
                 }
 
-                // Kediyi yatağın dibine, halının üstüne koyalım (Tahmini boşluk: X=-1.0, Y=0.05, Z=1.0)
-                catGroup.position.set(-1.0, 0.05, 1.0); 
+                // Kediyi tam yatağın ÜSTÜNE koyalım (Y eksenini 0.9 yaptık ki yorganın içinde kalmasın)
+                catGroup.position.set(-1.2, 0.9, -0.5); 
 
                 odaModeli.add(catGroup);
 
