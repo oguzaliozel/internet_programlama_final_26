@@ -2007,7 +2007,7 @@
 
         // Proje Modalı Aç/Kapa Mantığı
         
-        const projCloseBtn = projModal.querySelector('.close-btn');
+        
 
         
         let activeZIndex = 1000;
@@ -2068,20 +2068,14 @@
         }
 
         function openProjectModal() {
-            projModal.style.display = 'flex';
-            setTimeout(() => {
-                projModal.classList.add('show');
-            }, 10);
+            openOSModal();
         }
 
         function closeProjectModal() {
-            projModal.classList.remove('show');
-            setTimeout(() => {
-                projModal.style.display = 'none';
-            }, 300);
+            closeOSModal();
         }
 
-        projCloseBtn.addEventListener('click', closeProjectModal);
+        
         
         // Hobi Modalı Aç/Kapa Mantığı
         const hobModal = document.getElementById('hobbies-modal');
@@ -2178,7 +2172,7 @@
         
         // Modal dışına tıklayınca kapatma
         window.addEventListener('click', (e) => {
-            if (e.target === projModal) {
+            if (false) {
                 closeProjectModal();
             }
             if (e.target === hobModal) {
@@ -2208,7 +2202,7 @@
         // ESC tuşuna basınca kapatma
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                if (projModal.classList.contains('show')) closeProjectModal();
+                if (false) {}
                 if (hobModal.classList.contains('show')) closeHobbiesModal();
                 if (routModal.classList.contains('show')) closeRoutineModal();
                 if (dreamModal.classList.contains('show')) closeDreamsModal();
