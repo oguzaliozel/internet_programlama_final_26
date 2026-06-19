@@ -714,15 +714,114 @@
                 <span>Oyunlarım</span>
             </div>
             
-            <a href="https://github.com/oguzaliozel" target="_blank" style="text-decoration: none;">
-                <div class="desktop-icon">
-                    <img src="https://img.icons8.com/fluency/96/000000/github.png" alt="GitHub">
-                    <span>GitHub</span>
-                </div>
-            </a>
+            <div class="desktop-icon" onclick="openOSWindow('github-window')">
+                <img src="https://img.icons8.com/fluency/96/000000/github.png" alt="GitHub">
+                <span>GitHub</span>
+            </div>
         </div>
         
         <!-- Pencereler -->
+
+        <div id="github-window" class="os-window" style="width: 850px; height: 650px;">
+            <div class="os-window-header" onmousedown="dragOSWindow(event, 'github-window')">
+                <div class="os-window-title"><img src="https://img.icons8.com/fluency/48/000000/github.png" width="16" height="16"> Tarayıcı - GitHub</div>
+                <div class="os-window-controls">
+                    <div class="os-win-btn os-win-min" onclick="closeOSWindow('github-window')"></div>
+                    <div class="os-win-btn os-win-max"></div>
+                    <div class="os-win-btn os-win-close" onclick="closeOSWindow('github-window')"></div>
+                </div>
+            </div>
+            <div class="os-window-content" style="padding: 0; background: #0d1117; display: flex; flex-direction: column;">
+                <!-- Browser Navbar -->
+                <div style="background: #161b22; padding: 10px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #30363d;">
+                    <div style="display: flex; gap: 5px;">
+                        <span style="color: #8b949e; cursor: pointer;">&#8592;</span>
+                        <span style="color: #8b949e; cursor: pointer;">&#8594;</span>
+                        <span style="color: #8b949e; cursor: pointer;">&#8635;</span>
+                    </div>
+                    <div style="flex: 1; background: #0d1117; border: 1px solid #30363d; border-radius: 6px; padding: 5px 15px; color: #c9d1d9; font-family: monospace; font-size: 13px;">
+                        https://github.com/oguzaliozel
+                    </div>
+                    <a href="https://github.com/oguzaliozel" target="_blank" style="color: #58a6ff; font-size: 13px; text-decoration: none; border: 1px solid #30363d; padding: 4px 10px; border-radius: 6px; background: #21262d;">Dışarıda Aç</a>
+                </div>
+                
+                <!-- GitHub Profile Content Simulator -->
+                <div style="padding: 30px; overflow-y: auto; color: #c9d1d9; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+                    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+                        <!-- Left Sidebar -->
+                        <div style="width: 250px;">
+                            <img src="https://avatars.githubusercontent.com/u/104523999?v=4" alt="Profile" style="width: 100%; border-radius: 50%; border: 1px solid #30363d;" onerror="this.src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'; this.style.filter='invert(1)';">
+                            <h2 style="margin: 15px 0 0 0; color: #c9d1d9;">Oğuz Ali Özel</h2>
+                            <p style="color: #8b949e; font-size: 18px; margin: 0 0 15px 0;">oguzaliozel</p>
+                            <button style="width: 100%; background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 5px; border-radius: 6px; cursor: pointer;">Follow</button>
+                            <p style="margin-top: 15px; font-size: 14px;">Software Developer | 3D Web Enthusiast</p>
+                        </div>
+                        
+                        <!-- Right Content -->
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="display: flex; gap: 20px; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 20px;">
+                                <span style="cursor: pointer; padding-bottom: 10px; border-bottom: 2px solid #f78166;">Overview</span>
+                                <span style="cursor: pointer; color: #8b949e;">Repositories <span style="background: rgba(110,118,129,0.4); border-radius: 20px; padding: 2px 6px; font-size: 12px;">12</span></span>
+                            </div>
+                            
+                            <h3 style="font-weight: 400; margin-bottom: 15px;">Pinned</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <!-- Repo Card 1 -->
+                                <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117;">
+                                    <div style="color: #58a6ff; font-weight: 600; font-size: 15px; margin-bottom: 8px;">internet_programlama_final_26</div>
+                                    <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px;">Three.js ve WebGL kullanılarak geliştirilen interaktif 3D oda portfolyosu.</p>
+                                    <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
+                                        <span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #f1e05a; margin-right: 4px;"></span>JavaScript</span>
+                                        <span>★ 5</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Repo Card 2 -->
+                                <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117;">
+                                    <div style="color: #58a6ff; font-weight: 600; font-size: 15px; margin-bottom: 8px;">cep-cirak</div>
+                                    <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px;">Oto servisler için yapay zeka destekli sesli dükkan asistanı.</p>
+                                    <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
+                                        <span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #178600; margin-right: 4px;"></span>C#</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Repo Card 3 -->
+                                <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117;">
+                                    <div style="color: #58a6ff; font-weight: 600; font-size: 15px; margin-bottom: 8px;">smart-manufacturing-manager</div>
+                                    <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px;">İmalat atölyeleri için CNC makine maliyet analizi ve ERP sistemi.</p>
+                                    <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
+                                        <span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3572A5; margin-right: 4px;"></span>Python</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Repo Card 4 -->
+                                <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117;">
+                                    <div style="color: #58a6ff; font-weight: 600; font-size: 15px; margin-bottom: 8px;">library-management-oop</div>
+                                    <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px;">Nesneye yönelik programlama prensipleriyle kütüphane yönetim yazılımı.</p>
+                                    <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
+                                        <span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #b07219; margin-right: 4px;"></span>Java</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 30px; border: 1px solid #30363d; border-radius: 6px; padding: 20px;">
+                                <p style="color: #8b949e; font-size: 14px; text-align: center;">42 contributions in the last year</p>
+                                <!-- Fake contribution graph -->
+                                <div style="display: flex; gap: 3px; justify-content: center; margin-top: 10px; flex-wrap: wrap;">
+                                    <script>
+                                        for(let i=0; i<150; i++) {
+                                            const intensity = Math.random() > 0.7 ? ['#0e4429', '#006d32', '#26a641', '#39d353'][Math.floor(Math.random()*4)] : '#161b22';
+                                            document.write('<div style="width: 10px; height: 10px; border-radius: 2px; background: ' + intensity + ';"></div>');
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="projects-window" class="os-window">
             <div class="os-window-header" onmousedown="dragOSWindow(event, 'projects-window')">
                 <div class="os-window-title"><img src="https://img.icons8.com/color/48/000000/folder-invoices.png" width="16" height="16"> Projelerim</div>
@@ -843,6 +942,9 @@
             </div>
             <div class="taskbar-icon" onclick="openOSWindow('games-window')">
                 <img src="https://img.icons8.com/color/48/000000/controller.png" width="24" height="24">
+            </div>
+            <div class="taskbar-icon" onclick="openOSWindow('github-window')">
+                <img src="https://img.icons8.com/fluency/48/000000/github.png" width="24" height="24">
             </div>
             <div style="flex: 1;"></div>
             <div class="taskbar-icon active" onclick="closeOSModal()" title="Bilgisayarı Kapat (Odaya Dön)">
