@@ -746,78 +746,15 @@
                 </div>
                 
                 <!-- GitHub Profile Content Simulator -->
-                <div style="padding: 30px; overflow-y: auto; color: #c9d1d9; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
-                    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
-                        <!-- Left Sidebar -->
-                        <div style="width: 250px;">
-                            <img src="https://avatars.githubusercontent.com/u/104523999?v=4" alt="Profile" style="width: 100%; border-radius: 50%; border: 1px solid #30363d;" onerror="this.src='https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png'; this.style.filter='invert(1)';">
-                            <h2 style="margin: 15px 0 0 0; color: #c9d1d9;">Oğuz Ali Özel</h2>
-                            <p style="color: #8b949e; font-size: 18px; margin: 0 0 15px 0;">oguzaliozel</p>
-                            <button style="width: 100%; background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 5px; border-radius: 6px; cursor: pointer;">Follow</button>
-                            <p style="margin-top: 15px; font-size: 14px;">Software Developer | 3D Web Enthusiast</p>
-                        </div>
-                        
-                        <!-- Right Content -->
-                        <div style="flex: 1; min-width: 300px;">
-                            <div style="display: flex; gap: 20px; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 20px;">
-                                <span style="cursor: pointer; padding-bottom: 10px; border-bottom: 2px solid #f78166;">Overview</span>
-                                <span style="cursor: pointer; color: #8b949e;">Repositories <span style="background: rgba(110,118,129,0.4); border-radius: 20px; padding: 2px 6px; font-size: 12px;">12</span></span>
-                            </div>
-                            
-                            <h3 style="font-weight: 400; margin-bottom: 15px;">Pinned</h3>
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                                <!-- Repo Card 1 -->
-                                <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117;">
-                                    <div style="color: #58a6ff; font-weight: 600; font-size: 15px; margin-bottom: 8px;">internet_programlama_final_26</div>
-                                    <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px;">Three.js ve WebGL kullanılarak geliştirilen interaktif 3D oda portfolyosu.</p>
-                                    <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
-                                        <span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #f1e05a; margin-right: 4px;"></span>JavaScript</span>
-                                        <span>★ 5</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Repo Card 2 -->
-                                <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117;">
-                                    <div style="color: #58a6ff; font-weight: 600; font-size: 15px; margin-bottom: 8px;">cep-cirak</div>
-                                    <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px;">Oto servisler için yapay zeka destekli sesli dükkan asistanı.</p>
-                                    <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
-                                        <span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #178600; margin-right: 4px;"></span>C#</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Repo Card 3 -->
-                                <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117;">
-                                    <div style="color: #58a6ff; font-weight: 600; font-size: 15px; margin-bottom: 8px;">smart-manufacturing-manager</div>
-                                    <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px;">İmalat atölyeleri için CNC makine maliyet analizi ve ERP sistemi.</p>
-                                    <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
-                                        <span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #3572A5; margin-right: 4px;"></span>Python</span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Repo Card 4 -->
-                                <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117;">
-                                    <div style="color: #58a6ff; font-weight: 600; font-size: 15px; margin-bottom: 8px;">library-management-oop</div>
-                                    <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px;">Nesneye yönelik programlama prensipleriyle kütüphane yönetim yazılımı.</p>
-                                    <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
-                                        <span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #b07219; margin-right: 4px;"></span>Java</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div style="margin-top: 30px; border: 1px solid #30363d; border-radius: 6px; padding: 20px;">
-                                <p style="color: #8b949e; font-size: 14px; text-align: center;">42 contributions in the last year</p>
-                                <!-- Fake contribution graph -->
-                                <div style="display: flex; gap: 3px; justify-content: center; margin-top: 10px; flex-wrap: wrap;">
-                                    <script>
-                                        for(let i=0; i<150; i++) {
-                                            const intensity = Math.random() > 0.7 ? ['#0e4429', '#006d32', '#26a641', '#39d353'][Math.floor(Math.random()*4)] : '#161b22';
-                                            document.write('<div style="width: 10px; height: 10px; border-radius: 2px; background: ' + intensity + ';"></div>');
-                                        }
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
+                <div id="github-dynamic-content" style="padding: 30px; overflow-y: auto; color: #c9d1d9; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; flex: 1;">
+                    <div style="display: flex; justify-content: center; align-items: center; height: 100%; flex-direction: column; gap: 15px;">
+                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="48" height="48" style="filter: invert(1); animation: spin 2s linear infinite;">
+                        <div style="color: #8b949e;">GitHub API'den veriler çekiliyor...</div>
+                        <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
                     </div>
+                </div>
+            </div>
+        </div>
                 </div>
             </div>
         </div>
@@ -2105,6 +2042,114 @@
             setTimeout(() => {
                 openProjectDetailModal();
             }, 50);
+        }
+
+        
+        // --- GITHUB API ENTEGRASYONU ---
+        let isGithubFetched = false;
+        
+        async function fetchGitHubData() {
+            if (isGithubFetched) return;
+            const container = document.getElementById('github-dynamic-content');
+            
+            try {
+                // Paralel olarak hem profil hem repoları çekelim
+                const [profileRes, reposRes] = await Promise.all([
+                    fetch('https://api.github.com/users/oguzaliozel'),
+                    fetch('https://api.github.com/users/oguzaliozel/repos?sort=updated&per_page=6')
+                ]);
+                
+                if (!profileRes.ok || !reposRes.ok) throw new Error("API Limitine takılmış olabilir.");
+                
+                const profile = await profileRes.json();
+                const repos = await reposRes.json();
+                
+                let reposHtml = '';
+                repos.forEach(repo => {
+                    const langColor = repo.language === 'JavaScript' ? '#f1e05a' : 
+                                      repo.language === 'Python' ? '#3572A5' : 
+                                      repo.language === 'C#' ? '#178600' : 
+                                      repo.language === 'Java' ? '#b07219' : 
+                                      repo.language === 'HTML' ? '#e34c26' : '#8b949e';
+                                      
+                    reposHtml += `
+                        <div style="border: 1px solid #30363d; border-radius: 6px; padding: 15px; background: #0d1117; display: flex; flex-direction: column;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                <a href="${repo.html_url}" target="_blank" style="color: #58a6ff; font-weight: 600; font-size: 15px; text-decoration: none; word-break: break-all;">${repo.name}</a>
+                                <span style="border: 1px solid #30363d; border-radius: 20px; font-size: 11px; color: #8b949e; padding: 2px 7px;">${repo.visibility || 'Public'}</span>
+                            </div>
+                            <p style="color: #8b949e; font-size: 12px; margin-bottom: 15px; flex: 1;">${repo.description || 'Açıklama bulunmuyor.'}</p>
+                            <div style="display: flex; align-items: center; gap: 15px; font-size: 12px; color: #8b949e;">
+                                ${repo.language ? `<span><span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: ${langColor}; margin-right: 4px;"></span>${repo.language}</span>` : ''}
+                                ${repo.stargazers_count > 0 ? `<span>★ ${repo.stargazers_count}</span>` : ''}
+                                <span>Güncellendi: ${new Date(repo.updated_at).toLocaleDateString('tr-TR')}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // GitHub contribution graph simulator (Rastgele yeşil kareler)
+                let contribHtml = '<div style="display: flex; gap: 3px; justify-content: center; margin-top: 10px; flex-wrap: wrap;">';
+                for(let i=0; i<150; i++) {
+                    const intensity = Math.random() > 0.8 ? ['#0e4429', '#006d32', '#26a641', '#39d353'][Math.floor(Math.random()*4)] : '#161b22';
+                    contribHtml += `<div style="width: 10px; height: 10px; border-radius: 2px; background: ${intensity};"></div>`;
+                }
+                contribHtml += '</div>';
+
+                const html = `
+                    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+                        <!-- Left Sidebar -->
+                        <div style="width: 250px;">
+                            <img src="${profile.avatar_url}" alt="Profile" style="width: 100%; border-radius: 50%; border: 1px solid #30363d;">
+                            <h2 style="margin: 15px 0 0 0; color: #c9d1d9;">${profile.name || 'Oğuz Ali Özel'}</h2>
+                            <p style="color: #8b949e; font-size: 18px; margin: 0 0 15px 0;">${profile.login}</p>
+                            <button style="width: 100%; background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 5px; border-radius: 6px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#30363d'" onmouseout="this.style.background='#21262d'" onclick="window.open('${profile.html_url}', '_blank')">GitHub'da Takip Et</button>
+                            <p style="margin-top: 15px; font-size: 14px;">${profile.bio || 'Software Developer'}</p>
+                            
+                            <div style="display: flex; gap: 10px; margin-top: 15px; font-size: 13px; color: #8b949e;">
+                                <span><strong style="color: #c9d1d9;">${profile.followers}</strong> followers</span>
+                                <span>·</span>
+                                <span><strong style="color: #c9d1d9;">${profile.following}</strong> following</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Content -->
+                        <div style="flex: 1; min-width: 300px;">
+                            <div style="display: flex; gap: 20px; border-bottom: 1px solid #30363d; padding-bottom: 10px; margin-bottom: 20px;">
+                                <span style="cursor: pointer; padding-bottom: 10px; border-bottom: 2px solid #f78166;">Overview</span>
+                                <span style="cursor: pointer; color: #8b949e;" onclick="window.open('${profile.html_url}?tab=repositories', '_blank')">Repositories <span style="background: rgba(110,118,129,0.4); border-radius: 20px; padding: 2px 6px; font-size: 12px;">${profile.public_repos}</span></span>
+                            </div>
+                            
+                            <h3 style="font-weight: 400; margin-bottom: 15px;">Son Güncellenen Repolar (Canlı)</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px;">
+                                ${reposHtml}
+                            </div>
+                            
+                            <div style="margin-top: 30px; border: 1px solid #30363d; border-radius: 6px; padding: 20px;">
+                                <p style="color: #8b949e; font-size: 14px; text-align: center;">Geçen yılki katkılar (Simülasyon)</p>
+                                ${contribHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML = html;
+                isGithubFetched = true;
+                
+            } catch(e) {
+                console.error("GitHub API Hatası:", e);
+                container.innerHTML = `
+                    <div style="display: flex; justify-content: center; align-items: center; height: 100%; flex-direction: column; gap: 15px;">
+                        <div style="color: #ff7b72; font-size: 40px;">⚠️</div>
+                        <div style="color: #8b949e; text-align: center;">
+                            GitHub API verileri çekilemedi.<br>
+                            (Erişim limitine takılmış olabilirsiniz veya internet bağlantınız kopuk.)
+                        </div>
+                        <button onclick="window.open('https://github.com/oguzaliozel', '_blank')" style="background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
+                            Dışarıda Aç
+                        </button>
+                    </div>`;
+            }
         }
 
         // Proje Modalı Aç/Kapa Mantığı
