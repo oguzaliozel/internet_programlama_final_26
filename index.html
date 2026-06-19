@@ -2166,6 +2166,7 @@
             document.querySelectorAll('.os-window').forEach(w => w.style.display = 'none');
         }
         function openOSWindow(id) {
+            if(id === 'github-window') fetchGitHubData();
             const win = document.getElementById(id);
             if (win.style.display !== 'flex') {
                 win.style.display = 'flex';
