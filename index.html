@@ -1226,9 +1226,9 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                 <!-- Ses Seviyesi (Volume Control) Kontrolü -->
                 <div style="display: flex; align-items: center; gap: 10px; width: 100%; justify-content: center; margin-top: 5px; border-top: 1px solid rgba(255, 215, 0, 0.1); padding-top: 10px;">
                     <span style="font-size: 12px; color: #ffe066; cursor: pointer; user-select: none;" id="volume-mute-btn" title="Sesi Kapat / Aç">🔊</span>
-                    <input type="range" id="modal-volume-slider" min="0" max="1" step="0.05" value="0.7" 
+                    <input type="range" id="modal-volume-slider" min="0" max="1" step="0.05" value="0.15" 
                            style="width: 140px; accent-color: #ffd700; height: 4px; background: rgba(255,255,255,0.15); border-radius: 2px; cursor: pointer; outline: none; vertical-align: middle;">
-                    <span id="modal-volume-percent" style="font-size: 11px; color: #a1a1ff; font-weight: bold; min-width: 32px; text-align: left;">70%</span>
+                    <span id="modal-volume-percent" style="font-size: 11px; color: #a1a1ff; font-weight: bold; min-width: 32px; text-align: left;">15%</span>
                 </div>
             </div>
             
@@ -2572,8 +2572,8 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
         let audioContext = null;
         let radioAudio = null;
         let currentTrackIndex = 0;
-        let currentVolume = 0.7; // Varsayılan ses seviyesi (70%)
-        let preMuteVolume = 0.7;
+        let currentVolume = 0.15; // Varsayılan ses seviyesi (15%)
+        let preMuteVolume = 0.15;
 
         let autoplayListenersActive = false;
 
@@ -2958,7 +2958,7 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                     preMuteVolume = currentVolume;
                     currentVolume = 0;
                 } else {
-                    currentVolume = preMuteVolume > 0 ? preMuteVolume : 0.7;
+                    currentVolume = preMuteVolume > 0 ? preMuteVolume : 0.15;
                 }
                 if (vSlider) vSlider.value = currentVolume;
                 if (vPercent) vPercent.innerText = Math.round(currentVolume * 100) + "%";
