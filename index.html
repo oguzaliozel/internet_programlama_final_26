@@ -718,9 +718,70 @@
                 <img src="https://img.icons8.com/fluency/96/000000/github.png" alt="GitHub">
                 <span>GitHub</span>
             </div>
+            <div class="desktop-icon" onclick="openOSWindow('notepad-window')">
+                <img src="https://img.icons8.com/color/96/000000/notepad.png" alt="Not Defteri">
+                <span>Not Defteri</span>
+            </div>
         </div>
         
         <!-- Pencereler -->
+
+        <div id="notepad-window" class="os-window" style="width: 600px; height: 500px; background: #fff; border: 1px solid #999;">
+            <div class="os-window-header" onmousedown="dragOSWindow(event, 'notepad-window')" style="background: #fff; color: #000; border-bottom: none; border-top: 1px solid #e0e0e0; margin-top: 1px;">
+                <div class="os-window-title" style="font-weight: normal; font-size: 13px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                    <img src="https://img.icons8.com/color/48/000000/notepad.png" width="14" height="14" style="margin-right: 5px;"> CV_Oğuz_Ali_Özel.txt - Not Defteri
+                </div>
+                <div class="os-window-controls" style="filter: invert(1);">
+                    <div class="os-win-btn os-win-min" onclick="closeOSWindow('notepad-window')"></div>
+                    <div class="os-win-btn os-win-max"></div>
+                    <div class="os-win-btn os-win-close" onclick="closeOSWindow('notepad-window')"></div>
+                </div>
+            </div>
+            
+            <!-- Notepad Menu Bar -->
+            <div style="display: flex; gap: 15px; padding: 2px 10px 5px 10px; border-bottom: 1px solid #d9d9d9; font-size: 12px; color: #000; background: #fff; font-family: 'Segoe UI', sans-serif;">
+                <span style="cursor: pointer;">Dosya</span>
+                <span style="cursor: pointer;">Düzen</span>
+                <span style="cursor: pointer;">Biçim</span>
+                <span style="cursor: pointer;">Görünüm</span>
+                <span style="cursor: pointer;">Yardım</span>
+            </div>
+            
+            <!-- Notepad Text Area -->
+            <div class="os-window-content" style="padding: 0; background: #fff; height: calc(100% - 60px);">
+                <textarea style="width: 100%; height: 100%; border: none; outline: none; resize: none; padding: 10px; font-family: Consolas, 'Courier New', monospace; font-size: 14px; color: #000; line-height: 1.5;" readonly>
+Oğuz Ali Özel - Yazılım Geliştirici & 3D Web Tutkunu
+===================================================
+
+[ İLETİŞİM ]
+Email   : oguzaliozel@example.com
+GitHub  : github.com/oguzaliozel
+LinkedIn: linkedin.com/in/oguzaliozel
+
+[ YETENEKLER ]
+- Diller       : JavaScript, Python, C#, Java, HTML/CSS
+- Teknolojiler : Three.js, WebGL, React, Node.js
+- Veritabanı   : SQLite, PostgreSQL
+- Araçlar      : Git, Blender (3D Modelleme)
+
+[ HAKKIMDA ]
+Modern web teknolojileri ve 3D grafikler üzerine çalışmaktan keyif alıyorum.
+Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum.
+Şu an incelediğiniz bu 3D sanal oda, benim dijital dünyamın bir yansımasıdır.
+
+[ DENEYİMLER ]
+* Smart Manufacturing Manager - ERP/MRP Geliştirici
+  CNC atölyeleri için maliyet analizi ve ERP sistemi (Python, SQLite).
+* Cep Çırak - AI Dükkan Asistanı
+  Oto servisler için yapay zeka destekli WhatsApp ve Sesli Asistan (C#).
+* 3D Portfolyo Geliştiricisi
+  Three.js kullanılarak geliştirilmiş interaktif 3D web deneyimi.
+
+"Kodlamak, sadece bir iş değil; hayal gücünü dijital dünyada inşa etmektir."
+                </textarea>
+            </div>
+        </div>
+
 
         <div id="github-window" class="os-window" style="width: 850px; height: 650px;">
             <div class="os-window-header" onmousedown="dragOSWindow(event, 'github-window')">
@@ -882,6 +943,9 @@
             </div>
             <div class="taskbar-icon" onclick="openOSWindow('github-window')">
                 <img src="https://img.icons8.com/fluency/48/000000/github.png" width="24" height="24">
+            </div>
+            <div class="taskbar-icon" onclick="openOSWindow('notepad-window')">
+                <img src="https://img.icons8.com/color/48/000000/notepad.png" width="24" height="24">
             </div>
             <div style="flex: 1;"></div>
             <div class="taskbar-icon active" onclick="closeOSModal()" title="Bilgisayarı Kapat (Odaya Dön)">
