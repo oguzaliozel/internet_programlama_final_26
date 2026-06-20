@@ -230,6 +230,17 @@
                 grid-template-columns: 1fr 1fr;
             }
         }
+        .games-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        @media (min-width: 480px) {
+            .games-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
         .project-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -901,7 +912,7 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             </div>
         </div>
         
-        <div id="games-window" class="os-window" style="width: 650px; height: 500px;">
+        <div id="games-window" class="os-window" style="width: 860px; height: 540px;">
             <div class="os-window-header" onmousedown="dragOSWindow(event, 'games-window')">
                 <div class="os-window-title"><img src="https://img.icons8.com/color/48/000000/controller.png" width="16" height="16"> Oyunlarım</div>
                 <div class="os-window-controls">
@@ -912,13 +923,13 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             </div>
             <div class="os-window-content">
                 <p class="modal-subtitle">Boş zamanlarımda oynadığım favori oyunlar.</p>
-                <div class="projects-grid">
+                <div class="games-grid">
                     <div class="project-card" style="text-align: center; padding: 25px 15px;">
                         <img src="assets/lol.svg" style="height: 50px; object-fit: contain; margin-bottom: 20px;">
                         <h3 style="margin-top:0;">League of Legends</h3>
                     </div>
                     <div class="project-card" style="text-align: center; padding: 25px 15px;">
-                        <img src="assets/assetto_corsa.png" style="height: 50px; object-fit: contain; filter: invert(1); margin-bottom: 20px;">
+                        <img src="assets/assetto_corsa.png" style="height: 50px; object-fit: contain; margin-bottom: 20px;">
                         <h3 style="margin-top:0;">Assetto Corsa</h3>
                     </div>
                     <div class="project-card" style="text-align: center; padding: 25px 15px;">
@@ -926,7 +937,7 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                         <h3 style="margin-top:0;">Forza Horizon</h3>
                     </div>
                     <div class="project-card" style="text-align: center; padding: 25px 15px;">
-                        <img src="assets/cs2.svg" style="height: 50px; object-fit: contain; margin-bottom: 20px;">
+                        <img src="assets/cs2.svg" style="height: 50px; object-fit: contain; filter: invert(1); margin-bottom: 20px;">
                         <h3 style="margin-top:0;">Counter-Strike 2</h3>
                     </div>
                     <div class="project-card" style="text-align: center; padding: 25px 15px;">
@@ -1497,6 +1508,13 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                             if (mat.map) mat.map.encoding = THREE.sRGBEncoding;
                             if (mat.emissiveMap) mat.emissiveMap.encoding = THREE.sRGBEncoding;
                             if (mat.envMap) mat.envMap.encoding = THREE.sRGBEncoding;
+
+                            // Duvar arkasından gökyüzü elemanlarının sızmasını engellemek için transparanlığı kapat
+                            const matName = mat.name ? mat.name.toLowerCase() : "";
+                            if (!matName.includes("window") && !matName.includes("glass") && !matName.includes("cam") && !matName.includes("vidrio")) {
+                                mat.transparent = false;
+                                mat.opacity = 1.0;
+                            }
 
                             // POSTER DÜZELTME: Yan duran üç posteri 90 derece saat yönünde döndür
                             const posterMatNames = ['posterdune', 'posterbastardos', 'killbillposter'];
