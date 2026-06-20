@@ -3077,13 +3077,13 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                 setLampEmissive(true); // Tüm lamba ampullerini/şapkalarını yak!
             } else {
                 document.body.classList.remove('night-mode');
-                // Gündüz modu (Güneş arka planda değişiyor ama oda gece gibi loş kalıyor)
-                hemiLight.intensity = 0.25;
-                ambientLight.intensity = 0.3;
-                topLight.intensity = 0.4;
-                frontLight.intensity = 0.3;
-                fillLight.intensity = 0.2;
-                spot1.intensity = 0.4;
+                // Gündüz modu (Güneş ışığı odaya doluyor, ferah ve canlı bir ortam)
+                hemiLight.intensity = 0.85;  // Gökyüzünden gelen doğal mavi/beyaz ışık
+                ambientLight.intensity = 0.8; // Odanın genel aydınlık seviyesi
+                topLight.intensity = 1.2;     // Güneş ışığının yukarıdan vuruşu
+                frontLight.intensity = 0.7;   // Odanın ön tarafının aydınlanması
+                fillLight.intensity = 0.5;    // Gölgelerin çok karanlık kalmaması için dolgu
+                spot1.intensity = 0.0;        // Gündüz spot ışığına gerek yok
                 
                 // Gündüz lambaları söndür
                 bedsideLamp.intensity = 0.0; 
