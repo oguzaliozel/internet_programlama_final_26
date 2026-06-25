@@ -241,6 +241,49 @@
                 grid-template-columns: repeat(3, 1fr);
             }
         }
+        
+        /* Sudoku Oyunu Stilleri */
+        .sudoku-cell {
+            background: rgba(255, 255, 255, 0.02);
+            color: #ffffff;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.15s ease;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sudoku-cell.sudoku-original {
+            background: rgba(255, 255, 255, 0.05);
+            color: #a1a1ff;
+            font-weight: 700;
+            cursor: default;
+        }
+        .sudoku-cell.sudoku-editable {
+            color: #ffffff;
+        }
+        .sudoku-cell.sudoku-editable:hover {
+            background: rgba(255, 215, 0, 0.12);
+        }
+        .sudoku-cell.sudoku-selected {
+            background: rgba(255, 215, 0, 0.2) !important;
+            border: 1px solid #ffd700 !important;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.25);
+        }
+        .sudoku-cell.sudoku-error {
+            background: rgba(255, 95, 86, 0.2) !important;
+            border: 1px solid #ff5f56 !important;
+            color: #ff5f56 !important;
+        }
+        .sudoku-cell.sudoku-success-anim {
+            background: rgba(39, 201, 63, 0.2) !important;
+            border: 1px solid #27c93f !important;
+            color: #27c93f !important;
+        }
         .project-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -952,6 +995,53 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             </div>
         </div>
 
+        <div id="sudoku-window" class="os-window" style="width: 480px; height: 580px;">
+            <div class="os-window-header" onmousedown="dragOSWindow(event, 'sudoku-window')">
+                <div class="os-window-title"><img src="https://img.icons8.com/color/48/000000/grid.png" width="16" height="16"> Sudoku Zeka Oyunu</div>
+                <div class="os-window-controls">
+                    <div class="os-win-btn os-win-min" onclick="closeOSWindow('sudoku-window')"></div>
+                    <div class="os-win-btn os-win-max"></div>
+                    <div class="os-win-btn os-win-close" onclick="closeOSWindow('sudoku-window')"></div>
+                </div>
+            </div>
+            <div class="os-window-content" style="display: flex; flex-direction: column; align-items: center; padding: 15px;">
+                <p class="modal-subtitle" style="margin-bottom: 15px; text-align: center;">Problem çözme yeteneğinizi test edin.</p>
+                
+                <!-- Zorluk Derecesi Seçimi -->
+                <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                    <button class="details-btn sudoku-diff-btn active" data-diff="easy" onclick="changeSudokuDifficulty(this, 'easy')" style="margin: 0; font-size: 11px; padding: 4px 10px;">Kolay</button>
+                    <button class="details-btn sudoku-diff-btn" data-diff="medium" onclick="changeSudokuDifficulty(this, 'medium')" style="margin: 0; font-size: 11px; padding: 4px 10px;">Orta</button>
+                    <button class="details-btn sudoku-diff-btn" data-diff="hard" onclick="changeSudokuDifficulty(this, 'hard')" style="margin: 0; font-size: 11px; padding: 4px 10px;">Zor</button>
+                </div>
+                
+                <!-- Sudoku Board Grid -->
+                <div id="sudoku-board" style="display: grid; grid-template-columns: repeat(9, 1fr); grid-template-rows: repeat(9, 1fr); gap: 1px; background: rgba(255,255,255,0.08); border: 2px solid rgba(255, 215, 0, 0.4); border-radius: 6px; width: 320px; height: 320px; margin-bottom: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);"></div>
+                
+                <!-- Sayı Pad (Numpad) -->
+                <div style="display: flex; gap: 6px; margin-bottom: 15px;">
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(1)" style="margin: 0; padding: 8px 12px; font-weight: bold;">1</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(2)" style="margin: 0; padding: 8px 12px; font-weight: bold;">2</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(3)" style="margin: 0; padding: 8px 12px; font-weight: bold;">3</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(4)" style="margin: 0; padding: 8px 12px; font-weight: bold;">4</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(5)" style="margin: 0; padding: 8px 12px; font-weight: bold;">5</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(6)" style="margin: 0; padding: 8px 12px; font-weight: bold;">6</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(7)" style="margin: 0; padding: 8px 12px; font-weight: bold;">7</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(8)" style="margin: 0; padding: 8px 12px; font-weight: bold;">8</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(9)" style="margin: 0; padding: 8px 12px; font-weight: bold;">9</button>
+                    <button class="details-btn numpad-btn" onclick="inputSudokuNumber(0)" style="margin: 0; padding: 8px 8px; font-weight: bold; background: rgba(255, 95, 86, 0.2); border-color: rgba(255, 95, 86, 0.4); color: #ff5f56;">Sil</button>
+                </div>
+                
+                <!-- Kontroller -->
+                <div style="display: flex; gap: 10px; width: 100%; justify-content: center;">
+                    <button class="details-btn" onclick="checkSudoku()" style="margin: 0; border-color: #ffd700; color: #ffd700;">Kontrol Et</button>
+                    <button class="details-btn" onclick="restartSudoku()" style="margin: 0; border-color: #a1a1ff; color: #a1a1ff;">Yeniden Başlat</button>
+                    <button class="details-btn" onclick="hintSudoku()" style="margin: 0; border-color: #27c93f; color: #27c93f;">İpucu Al</button>
+                </div>
+                
+                <div id="sudoku-feedback" style="margin-top: 10px; font-size: 12px; font-weight: bold; text-align: center; height: 18px; color: #ffd700;"></div>
+            </div>
+        </div>
+
         <div id="os-taskbar">
             <!-- Windows 11 start menu icon placeholder -->
             <div class="taskbar-icon">
@@ -962,6 +1052,9 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             </div>
             <div class="taskbar-icon" onclick="openOSWindow('games-window')">
                 <img src="https://img.icons8.com/color/48/000000/controller.png" width="24" height="24">
+            </div>
+            <div class="taskbar-icon" onclick="openOSWindow('sudoku-window')" title="Sudoku Zeka Oyunu">
+                <img src="https://img.icons8.com/color/48/000000/grid.png" width="24" height="24">
             </div>
             <div class="taskbar-icon" onclick="openOSWindow('github-window')">
                 <img src="https://img.icons8.com/fluency/48/000000/github.png" width="24" height="24">
@@ -1971,6 +2064,7 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                                 }
                             });
                         }
+                        openOSWindow('sudoku-window');
                     }
                 },
                 domo: {
@@ -3195,6 +3289,257 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             
             renderer.render(scene, camera);
         }
+        // --- Sudoku Oyunu Kodları ---
+        let sudokuSolution = Array(9).fill().map(() => Array(9).fill(0));
+        let sudokuPuzzle = Array(9).fill().map(() => Array(9).fill(0));
+        let selectedCellCoords = null;
+        let selectedCellElement = null;
+        let sudokuDifficulty = 'easy';
+
+        function solveSudoku(grid) {
+            for (let row = 0; row < 9; row++) {
+                for (let col = 0; col < 9; col++) {
+                    if (grid[row][col] === 0) {
+                        for (let num = 1; num <= 9; num++) {
+                            if (isValidSudoku(grid, row, col, num)) {
+                                grid[row][col] = num;
+                                if (solveSudoku(grid)) return true;
+                                grid[row][col] = 0;
+                            }
+                        }
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function isValidSudoku(grid, row, col, num) {
+            for (let x = 0; x < 9; x++) {
+                if (grid[row][x] === num) return false;
+                if (grid[x][col] === num) return false;
+            }
+            let startRow = row - row % 3;
+            let startCol = col - col % 3;
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (grid[i + startRow][j + startCol] === num) return false;
+                }
+            }
+            return true;
+        }
+
+        function fillDiagonalBoxes(grid) {
+            for (let i = 0; i < 9; i += 3) {
+                for (let row = 0; row < 3; row++) {
+                    for (let col = 0; col < 3; col++) {
+                        let num;
+                        do {
+                            num = Math.floor(Math.random() * 9) + 1;
+                        } while (!unusedInBox(grid, i, i, num));
+                        grid[i + row][i + col] = num;
+                    }
+                }
+            }
+        }
+
+        function unusedInBox(grid, startRow, startCol, num) {
+            for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 3; j++) {
+                    if (grid[startRow + i][startCol + j] === num) return false;
+                }
+            }
+            return true;
+        }
+
+        function initSudokuGame(difficulty) {
+            sudokuDifficulty = difficulty || 'easy';
+            let grid = Array(9).fill().map(() => Array(9).fill(0));
+            fillDiagonalBoxes(grid);
+            solveSudoku(grid);
+            sudokuSolution = grid.map(row => [...row]);
+            sudokuPuzzle = grid.map(row => [...row]);
+            
+            let cellsToRemove = 35; // easy
+            if (sudokuDifficulty === 'medium') cellsToRemove = 45;
+            if (sudokuDifficulty === 'hard') cellsToRemove = 55;
+            
+            let count = cellsToRemove;
+            while (count > 0) {
+                let r = Math.floor(Math.random() * 9);
+                let c = Math.floor(Math.random() * 9);
+                if (sudokuPuzzle[r][c] !== 0) {
+                    sudokuPuzzle[r][c] = 0;
+                    count--;
+                }
+            }
+            
+            selectedCellCoords = null;
+            selectedCellElement = null;
+            const feedback = document.getElementById("sudoku-feedback");
+            if (feedback) feedback.innerText = "";
+            renderSudokuBoard();
+        }
+
+        function renderSudokuBoard() {
+            const board = document.getElementById("sudoku-board");
+            if (!board) return;
+            board.innerHTML = "";
+            
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const val = sudokuPuzzle[r][c];
+                    const cell = document.createElement("div");
+                    cell.className = "sudoku-cell";
+                    
+                    if (val !== 0) {
+                        cell.innerText = val;
+                        cell.classList.add("sudoku-original");
+                    } else {
+                        cell.classList.add("sudoku-editable");
+                        cell.addEventListener("click", () => selectSudokuCell(cell, r, c));
+                    }
+                    
+                    if (c === 2 || c === 5) cell.style.borderRight = "2px solid rgba(255, 215, 0, 0.4)";
+                    if (r === 2 || r === 5) cell.style.borderBottom = "2px solid rgba(255, 215, 0, 0.4)";
+                    
+                    board.appendChild(cell);
+                }
+            }
+        }
+
+        function selectSudokuCell(cell, r, c) {
+            const cells = document.querySelectorAll(".sudoku-cell");
+            cells.forEach(el => el.classList.remove("sudoku-selected"));
+            
+            selectedCellCoords = { row: r, col: c };
+            selectedCellElement = cell;
+            cell.classList.add("sudoku-selected");
+            const feedback = document.getElementById("sudoku-feedback");
+            if (feedback) feedback.innerText = "";
+        }
+
+        function inputSudokuNumber(num) {
+            if (!selectedCellCoords || !selectedCellElement) return;
+            const { row, col } = selectedCellCoords;
+            selectedCellElement.classList.remove("sudoku-error");
+            
+            if (num === 0) {
+                sudokuPuzzle[row][col] = 0;
+                selectedCellElement.innerText = "";
+            } else {
+                sudokuPuzzle[row][col] = num;
+                selectedCellElement.innerText = num;
+            }
+        }
+
+        function changeSudokuDifficulty(btn, difficulty) {
+            const buttons = document.querySelectorAll(".sudoku-diff-btn");
+            buttons.forEach(el => el.classList.remove("active"));
+            btn.classList.add("active");
+            initSudokuGame(difficulty);
+        }
+
+        function checkSudoku() {
+            let hasErrors = false;
+            let isComplete = true;
+            const cells = document.querySelectorAll(".sudoku-cell");
+            
+            let idx = 0;
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const cell = cells[idx++];
+                    const val = sudokuPuzzle[r][c];
+                    const solVal = sudokuSolution[r][c];
+                    
+                    if (val === 0) {
+                        isComplete = false;
+                    } else if (val !== solVal) {
+                        cell.classList.add("sudoku-error");
+                        hasErrors = true;
+                    } else {
+                        cell.classList.remove("sudoku-error");
+                    }
+                }
+            }
+            
+            const feedback = document.getElementById("sudoku-feedback");
+            if (feedback) {
+                if (hasErrors) {
+                    feedback.style.color = "#ff5f56";
+                    feedback.innerText = "Bazı hatalar var! Hatalı hücreler kırmızı ile gösterildi.";
+                } else if (!isComplete) {
+                    feedback.style.color = "#ffd700";
+                    feedback.innerText = "Harika gidiyorsun! Boş hücreleri doldurmaya devam et.";
+                } else {
+                    feedback.style.color = "#27c93f";
+                    feedback.innerText = "Tebrikler! Sudoku başarıyla çözüldü! 🎉";
+                    cells.forEach(el => el.classList.add("sudoku-success-anim"));
+                }
+            }
+        }
+
+        function restartSudoku() {
+            const cells = document.querySelectorAll(".sudoku-cell");
+            let idx = 0;
+            for (let r = 0; r < 9; r++) {
+                for (let c = 0; c < 9; c++) {
+                    const cell = cells[idx++];
+                    if (cell.classList.contains("sudoku-editable")) {
+                        sudokuPuzzle[r][c] = 0;
+                        cell.innerText = "";
+                        cell.classList.remove("sudoku-error");
+                        cell.classList.remove("sudoku-success-anim");
+                        cell.classList.remove("sudoku-selected");
+                    }
+                }
+            }
+            selectedCellCoords = null;
+            selectedCellElement = null;
+            const feedback = document.getElementById("sudoku-feedback");
+            if (feedback) feedback.innerText = "";
+        }
+
+        function hintSudoku() {
+            if (!selectedCellCoords || !selectedCellElement) {
+                const feedback = document.getElementById("sudoku-feedback");
+                if (feedback) {
+                    feedback.style.color = "#ffd700";
+                    feedback.innerText = "Lütfen ipucu almak istediğiniz boş bir hücre seçin.";
+                }
+                return;
+            }
+            
+            const { row, col } = selectedCellCoords;
+            const solVal = sudokuSolution[row][col];
+            
+            sudokuPuzzle[row][col] = solVal;
+            selectedCellElement.innerText = solVal;
+            selectedCellElement.classList.remove("sudoku-error");
+            selectedCellElement.classList.add("sudoku-selected");
+            
+            const feedback = document.getElementById("sudoku-feedback");
+            if (feedback) {
+                feedback.style.color = "#27c93f";
+                feedback.innerText = "İpucu uygulandı!";
+            }
+        }
+
+        // Klavye dinleyicisi
+        document.addEventListener("keydown", (e) => {
+            const sudokuWin = document.getElementById("sudoku-window");
+            if (sudokuWin && sudokuWin.style.display === "flex" && selectedCellCoords) {
+                if (e.key >= "1" && e.key <= "9") {
+                    inputSudokuNumber(parseInt(e.key));
+                } else if (e.key === "Backspace" || e.key === "Delete" || e.key === "0") {
+                    inputSudokuNumber(0);
+                }
+            }
+        });
+
+        // Oyunu ilk açılışta başlat
+        initSudokuGame('easy');
+
         animate();
     </script>
 </body>
