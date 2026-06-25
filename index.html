@@ -1733,11 +1733,10 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                 percent = Math.round((xhr.loaded / xhr.total) * 100);
                 displayPercentText = `%${percent}`;
             } else {
-                // Toplam boyut bilinmiyorsa tahmini boyuta (~12.8MB) göre hesapla
-                const expectedTotal = 12.8 * 1024 * 1024;
+                // Toplam boyut bilinmiyorsa yeni optimize oda boyutu olan ~1.1MB'a göre hesapla
+                const expectedTotal = 1.1 * 1024 * 1024;
                 percent = Math.min(Math.round((xhr.loaded / expectedTotal) * 100), 99);
-                const downloadedMB = (xhr.loaded / (1024 * 1024)).toFixed(1);
-                displayPercentText = `${downloadedMB} MB`;
+                displayPercentText = `%${percent}`;
             }
             
             if (progressBar) progressBar.style.width = percent + '%';
