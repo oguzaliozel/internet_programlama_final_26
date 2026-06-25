@@ -1548,18 +1548,7 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                                 mat.opacity = 1.0;
                             }
 
-                            // POSTER DÜZELTME: Yan duran üç posteri 90 derece saat yönünde döndür
-                            const posterMatNames = ['posterdune', 'posterbastardos', 'killbillposter'];
-                            if (mat.name && posterMatNames.includes(mat.name.toLowerCase())) {
-                                if (mat.map) {
-                                    mat.map.center.set(0.5, 0.5);
-                                    mat.map.rotation = Math.PI / 2;
-                                }
-                                if (mat.emissiveMap) {
-                                    mat.emissiveMap.center.set(0.5, 0.5);
-                                    mat.emissiveMap.rotation = Math.PI / 2;
-                                }
-                            }
+
                             // Materyalin karartılmış görünmesini engelle
                             if (mat.metalness !== undefined) mat.metalness = Math.min(mat.metalness, 0.5);
                             mat.needsUpdate = true;
