@@ -1817,6 +1817,9 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                 return "workstation_monitor";
             }
             
+            if (!parentName || parentName === "scene" || parentName === "gltf" || parentName === "root" || parentName.includes("scene")) {
+                return name;
+            }
             return parentName || name; // Diğer nesneler ebeveyn adlarıyla gruplanır
         }
 
@@ -2104,25 +2107,32 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             if (odaModeli) {
                 const intersects = raycaster.intersectObjects(odaModeli.children, true);
 
-                if (intersects.length > 0) {
-                    let hitObject = intersects[0].object;
-                    let curr = hitObject;
-                    let foundInteractive = null;
+                let foundInteractive = null;
+                let hitObject = null;
+                for (let i = 0; i < intersects.length; i++) {
+                    let curr = intersects[i].object;
+                    let interactiveObj = null;
                     while (curr && curr !== odaModeli) {
                         if (curr.userData.isInteractive) {
-                            foundInteractive = curr;
+                            interactiveObj = curr;
                             break;
                         }
                         curr = curr.parent;
                     }
-                    
-                    if (!foundInteractive) return;
-                    
-                    if (isTourActive) {
-                        stopCinematicTour();
+                    if (interactiveObj) {
+                        foundInteractive = interactiveObj;
+                        hitObject = intersects[i].object;
+                        break;
                     }
-                    
-                    const targetObj = foundInteractive;
+                }
+                
+                if (!foundInteractive) return;
+                
+                if (isTourActive) {
+                    stopCinematicTour();
+                }
+                
+                const targetObj = foundInteractive;
                     const objectName = targetObj.name;
                     const parentName = targetObj.parent && targetObj.parent.name ? targetObj.parent.name : "";
                     
@@ -2835,20 +2845,20 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             let foundInteractive = false;
             if (odaModeli) {
                 const intersects = raycaster.intersectObjects(odaModeli.children, true);
-                if (intersects.length > 0) {
-                    let hitObject = intersects[0].object;
-                    let curr = hitObject;
+                for (let i = 0; i < intersects.length; i++) {
+                    let curr = intersects[i].object;
+                    let interactiveObj = null;
                     while (curr && curr !== odaModeli) {
                         if (curr.userData.isInteractive) {
-                            hitObject = curr;
+                            interactiveObj = curr;
                             break;
                         }
                         curr = curr.parent;
                     }
-
-                    if (hitObject.userData.isInteractive) {
-                        currentIntersected = hitObject;
+                    if (interactiveObj) {
+                        currentIntersected = interactiveObj;
                         foundInteractive = true;
+                        break;
                     }
                 }
             }
