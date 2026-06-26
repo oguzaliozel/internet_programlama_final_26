@@ -678,6 +678,14 @@
             
             <!-- Menü Öğeleri Listesi -->
             <div style="display: flex; flex-direction: column; gap: 8px;" id="sidebar-items-list">
+                <!-- Sinematik Oda Turu Butonu -->
+                <button class="sidebar-item" onclick="startCinematicTour()" style="background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.03)); border: 1px solid rgba(255, 215, 0, 0.3); box-shadow: 0 0 15px rgba(255, 215, 0, 0.08); margin-bottom: 8px; transition: all 0.25s ease;" id="tour-btn">
+                    <span style="font-size: 16px; filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));">🎬</span>
+                    <div style="display: flex; flex-direction: column; text-align: left;">
+                        <span style="font-size: 12px; font-weight: bold; color: #ffd700; text-shadow: 0 0 5px rgba(255, 215, 0, 0.2);">Sinematik Oda Turu</span>
+                        <span style="font-size: 9px; color: #dfdfbf;">Odayı otomatik keşfet</span>
+                    </div>
+                </button>
                 <div class="sidebar-item" data-key="lamp" title="Oda Işığı">
                     <span class="icon">💡</span>
                     <span class="label">Başucu Lambası</span>
@@ -1263,6 +1271,28 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Sinematik Oda Turu Alt Kontrol Paneli -->
+    <div id="tour-overlay" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(13, 13, 38, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 215, 0, 0.35); border-radius: 16px; padding: 18px 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255, 215, 0, 0.15); z-index: 9999; max-width: 500px; width: 90%; color: white; flex-direction: column; gap: 12px; transition: opacity 0.3s ease;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span id="tour-step-indicator" style="font-size: 11px; font-weight: bold; color: #ffd700; text-transform: uppercase; letter-spacing: 1.5px;">Adım 1/7</span>
+            <button onclick="stopCinematicTour()" style="background: rgba(255, 95, 86, 0.2); border: 1px solid rgba(255, 95, 86, 0.4); color: #ff5f56; border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: bold; cursor: pointer; transition: all 0.2s;">Turu Durdur</button>
+        </div>
+        <div>
+            <h3 id="tour-step-title" style="margin: 0 0 5px 0; color: #ffffff; font-size: 16px; font-weight: bold;">Odaya Genel Bakış</h3>
+            <p id="tour-step-desc" style="margin: 0; color: #b0b0cf; font-size: 12px; line-height: 1.5; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">Oğuz Ali Özel'in 3 boyutlu sanal dünyasına hoş geldiniz! Bu turda odanın tüm detaylarını keşfedeceğiz.</p>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+            <button onclick="prevTourStep()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: bold; cursor: pointer; transition: all 0.2s; min-width: 80px;">Önceki</button>
+            
+            <!-- Auto-play progress bar / dot indicator -->
+            <div style="flex: 1; height: 3px; background: rgba(255,255,255,0.1); border-radius: 3px; margin: 0 15px; overflow: hidden; position: relative;">
+                <div id="tour-progress-bar" style="width: 0%; height: 100%; background: #ffd700; transition: width 0.1s linear;"></div>
+            </div>
+            
+            <button onclick="nextTourStep()" style="background: linear-gradient(135deg, #ffe066, #ffd700); border: none; color: #070714; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: bold; cursor: pointer; transition: all 0.2s; min-width: 80px; box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);">Sonraki</button>
         </div>
     </div>
 
@@ -2004,6 +2034,10 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                     }
                     
                     if (!foundInteractive) return;
+                    
+                    if (isTourActive) {
+                        stopCinematicTour();
+                    }
                     
                     const targetObj = foundInteractive;
                     const objectName = targetObj.name;
@@ -3374,7 +3408,23 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
 
         function animate() {
             requestAnimationFrame(animate);
-            controls.update(); 
+            
+            if (isTourActive) {
+                // Smoothly lerp camera position
+                camera.position.lerp(tourTargetPosition, 0.04);
+                
+                // Smoothly lerp controls target (focus point)
+                controls.target.lerp(tourTargetLookAt, 0.04);
+                
+                // Smoothly lerp camera zoom level
+                camera.zoom = THREE.MathUtils.lerp(camera.zoom, tourTargetZoom, 0.04);
+                camera.updateProjectionMatrix();
+                
+                // Force camera to look at the target point
+                camera.lookAt(controls.target);
+            } else {
+                controls.update(); 
+            }
             
             // Marshall amfi çalarken ritmik nabız (pulsation) etkisi uygula
             if (isAmpPlaying && odaModeli) {
@@ -3652,6 +3702,183 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             setTimeout(() => {
                 modal.style.display = 'none';
             }, 300);
+        }
+
+        // --- Sinematik Oda Turu Kodları ---
+        let isTourActive = false;
+        let tourCurrentStop = 0;
+        let tourTimer = null;
+        let tourProgressInterval = null;
+        const TOUR_STOP_DURATION = 6500; // 6.5 seconds per stop
+
+        let tourTargetPosition = new THREE.Vector3();
+        let tourTargetLookAt = new THREE.Vector3();
+        let tourTargetZoom = 1.0;
+
+        let tourSavedPosition = new THREE.Vector3();
+        let tourSavedLookAt = new THREE.Vector3();
+        let tourSavedZoom = 1.0;
+
+        const tourStops = [
+            {
+                title: "Odaya Genel Bakış",
+                desc: "Oğuz Ali Özel'in 3 boyutlu sanal dünyasına hoş geldiniz! Bu turda odanın tüm detaylarını keşfedeceğiz.",
+                pos: { x: 20, y: 20, z: 20 },
+                target: { x: 0, y: 2.0, z: 0 },
+                zoom: 3.5
+            },
+            {
+                title: "Çalışma İstasyonu",
+                desc: "Burası kod yazdığım, projelerimi geliştirdiğim ve sanal işletim sistemimi kullandığım yer.",
+                pos: { x: 1.2, y: 3.2, z: -1.0 },
+                target: { x: 3.32, y: 2.5, z: -2.05 },
+                zoom: 6.0
+            },
+            {
+                title: "Zeka Küpü & Sudoku",
+                desc: "Problem çözme yeteneğimi zinde tutan zeka küpüm. Üzerine tıklayarak interaktif Sudoku oynayabilirsin!",
+                pos: { x: 1.5, y: 2.8, z: 0.5 },
+                target: { x: 2.95, y: 2.14, z: -0.90 },
+                zoom: 8.5
+            },
+            {
+                title: "Şila'nın Köşesi",
+                desc: "Odamızın sakin Ragdoll kedisi Şila. En sevdiği aktivite yumuşak battaniyesinde uyumak.",
+                pos: { x: 0.2, y: 1.8, z: -0.2 },
+                target: { x: -1.40, y: 0.90, z: -0.98 },
+                zoom: 6.5
+            },
+            {
+                title: "Marshall Amfi & Radyo",
+                desc: "Müzik dinlemeyi ve kafa dağıtmayı çok seviyorum. Bu amfiye tıklayarak radyo akışlarını çalabilirsin.",
+                pos: { x: -1.2, y: 2.6, z: -1.0 },
+                target: { x: -3.31, y: 2.15, z: -2.18 },
+                zoom: 7.5
+            },
+            {
+                title: "Otomobil & Hobiler",
+                desc: "Forza Horizon, Skyline GTR ve Lightning McQueen tutkumu yansıtan poster duvarım.",
+                pos: { x: -1.0, y: 2.5, z: 0.20 },
+                target: { x: -3.75, y: 3.2, z: 0.20 },
+                zoom: 5.0
+            },
+            {
+                title: "İlham Penceresi",
+                desc: "Geleceğe dair hayallerimi, yapay zeka ve oyun geliştirme hedeflerimi barındıran pencerem.",
+                pos: { x: 0.10, y: 2.5, z: -0.5 },
+                target: { x: 0.10, y: 3.0, z: -3.97 },
+                zoom: 4.5
+            }
+        ];
+
+        function startCinematicTour() {
+            // Açık olan tüm modalları kapat
+            closeOSModal();
+            document.querySelectorAll('.modal').forEach(m => {
+                m.classList.remove('show');
+                m.style.display = 'none';
+            });
+
+            // Mevcut kamera durumunu kaydet
+            tourSavedPosition.copy(camera.position);
+            tourSavedLookAt.copy(controls.target);
+            tourSavedZoom = camera.zoom;
+
+            // Tur başlangıç değerlerini dinamik zoom sınırlarına göre set et
+            tourStops[0].zoom = defaultZoom;
+            tourStops[0].target.y = defaultTargetY;
+
+            isTourActive = true;
+            tourCurrentStop = 0;
+            controls.enabled = false; // OrbitControls'ü devre dışı bırak
+
+            // Tur kontrol panelini göster
+            const overlay = document.getElementById('tour-overlay');
+            if (overlay) {
+                overlay.style.display = 'flex';
+                overlay.style.opacity = '1';
+            }
+
+            activateTourStop(0);
+        }
+
+        function stopCinematicTour() {
+            if (!isTourActive) return;
+            isTourActive = false;
+            controls.enabled = true; // OrbitControls'ü tekrar aktif et
+            
+            clearInterval(tourProgressInterval);
+            clearTimeout(tourTimer);
+
+            // Paneli gizle
+            const overlay = document.getElementById('tour-overlay');
+            if (overlay) overlay.style.display = 'none';
+
+            // Kamerayı eski haline yumuşakça geri döndür
+            let steps = 0;
+            const returnInterval = setInterval(() => {
+                camera.position.lerp(tourSavedPosition, 0.1);
+                controls.target.lerp(tourSavedLookAt, 0.1);
+                camera.zoom = THREE.MathUtils.lerp(camera.zoom, tourSavedZoom, 0.1);
+                camera.updateProjectionMatrix();
+                camera.lookAt(controls.target);
+                steps++;
+                if (steps > 25) {
+                    clearInterval(returnInterval);
+                    controls.update(); // OrbitControls'ü tamamen devralmaya hazırla
+                }
+            }, 16);
+        }
+
+        function activateTourStop(index) {
+            tourCurrentStop = index;
+            const stop = tourStops[index];
+
+            // Yeni hedefleri belirle
+            tourTargetPosition.set(stop.pos.x, stop.pos.y, stop.pos.z);
+            tourTargetLookAt.set(stop.target.x, stop.target.y, stop.target.z);
+            tourTargetZoom = stop.zoom;
+
+            // UI metinlerini güncelle
+            document.getElementById('tour-step-indicator').innerText = `Adım ${index + 1}/${tourStops.length}`;
+            document.getElementById('tour-step-title').innerText = stop.title;
+            document.getElementById('tour-step-desc').innerText = stop.desc;
+
+            // İlerleme çubuğu ve zamanlayıcıyı sıfırla
+            clearInterval(tourProgressInterval);
+            clearTimeout(tourTimer);
+            
+            const progressBar = document.getElementById('tour-progress-bar');
+            if (progressBar) progressBar.style.width = '0%';
+
+            let elapsed = 0;
+            const intervalStep = 100; // Her 100ms'de bir ilerleme çubuğunu güncelle
+            tourProgressInterval = setInterval(() => {
+                elapsed += intervalStep;
+                const percentage = Math.min((elapsed / TOUR_STOP_DURATION) * 100, 100);
+                if (progressBar) progressBar.style.width = `${percentage}%`;
+            }, intervalStep);
+
+            tourTimer = setTimeout(() => {
+                nextTourStep();
+            }, TOUR_STOP_DURATION);
+        }
+
+        function nextTourStep() {
+            let nextIndex = tourCurrentStop + 1;
+            if (nextIndex >= tourStops.length) {
+                stopCinematicTour();
+            } else {
+                activateTourStop(nextIndex);
+            }
+        }
+
+        function prevTourStep() {
+            let prevIndex = tourCurrentStop - 1;
+            if (prevIndex < 0) {
+                prevIndex = tourStops.length - 1; // Başa döngü yap
+            }
+            activateTourStop(prevIndex);
         }
 
         // Klavye dinleyicisi
