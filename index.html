@@ -1097,7 +1097,7 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
 
     <!-- Günlük Rutin Modalı -->
     <div id="routine-modal" class="modal">
-        <div class="modal-content" style="border-color: #6c6cbf; box-shadow: 0 0 30px rgba(108, 108, 191, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.05);">
+        <div class="modal-content" style="border-color: #6c6cbf; box-shadow: 0 0 30px rgba(108, 108, 191, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.05); max-width: 580px;">
             <span class="close-btn">&times;</span>
             <div class="modal-header">
                 <span class="icon">📅</span>
@@ -1105,54 +1105,161 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             </div>
             <p class="modal-subtitle">Günün farklı saatlerinde odaklandığım aktiviteler ve zaman planım.</p>
             
-            <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 10px;">
-                <div style="display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 15px;">
-                    <span style="font-weight: bold; color: #a1a1ff; min-width: 90px; font-size: 14px;">🌅 08:30 - 12:00</span>
-                    <div>
-                        <h4 style="margin: 0 0 4px 0; color: #ffffff; font-size: 14px;">Güne Başlangıç & Okul</h4>
-                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.4;">Sabah 8:30'da uyanıp hazırlanarak dersler için okula geçiyorum.</p>
+            <style>
+                .timeline-container {
+                    position: relative;
+                    padding-left: 20px;
+                    margin: 15px 0 5px 0;
+                }
+                .timeline-line {
+                    position: absolute;
+                    left: 6px;
+                    top: 10px;
+                    bottom: 10px;
+                    width: 2px;
+                    background: linear-gradient(180deg, #a1a1ff, #6c6cbf 50%, rgba(108, 108, 191, 0.1));
+                    opacity: 0.4;
+                    box-shadow: 0 0 8px rgba(108, 108, 191, 0.5);
+                }
+                .timeline-item {
+                    position: relative;
+                    margin-bottom: 16px;
+                    transition: transform 0.2s ease;
+                }
+                .timeline-node {
+                    position: absolute;
+                    left: -20px;
+                    top: 18px;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background: #0d0d26;
+                    border: 3px solid #a1a1ff;
+                    box-shadow: 0 0 8px #a1a1ff;
+                    z-index: 2;
+                    transition: all 0.25s ease;
+                }
+                .routine-card {
+                    background: rgba(255, 255, 255, 0.02);
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    border-radius: 12px;
+                    padding: 14px 18px;
+                    backdrop-filter: blur(10px);
+                    -webkit-backdrop-filter: blur(10px);
+                    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+                }
+                .timeline-item:hover .routine-card {
+                    background: rgba(255, 255, 255, 0.04) !important;
+                    border-color: rgba(161, 161, 255, 0.3) !important;
+                    transform: translateX(5px);
+                    box-shadow: 0 8px 25px rgba(108, 108, 191, 0.15);
+                }
+                .timeline-item:hover .timeline-node {
+                    background: #a1a1ff;
+                    transform: scale(1.2);
+                    box-shadow: 0 0 12px #a1a1ff;
+                }
+            </style>
+
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <!-- Aktivite 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="routine-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 5px;">
+                            <h4 style="margin: 0; color: #ffffff; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                <span>🌅</span> Güne Başlangıç & Okul
+                            </h4>
+                            <span style="font-weight: 700; color: #a1a1ff; font-size: 11px; background: rgba(161, 161, 255, 0.12); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(161, 161, 255, 0.2);">08:30 - 12:00</span>
+                        </div>
+                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.45;">Sabah 8:30'da uyanıp hazırlanarak dersler için okula geçiyorum.</p>
                     </div>
                 </div>
-                <div style="display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 15px;">
-                    <span style="font-weight: bold; color: #a1a1ff; min-width: 90px; font-size: 14px;">🍽️ 12:00 - 13:00</span>
-                    <div>
-                        <h4 style="margin: 0 0 4px 0; color: #ffffff; font-size: 14px;">Öğle Arası</h4>
-                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.4;">Derslere kısa bir ara vererek yemek yiyor ve dinleniyorum.</p>
+
+                <!-- Aktivite 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="routine-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 5px;">
+                            <h4 style="margin: 0; color: #ffffff; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                <span>🍽️</span> Öğle Arası
+                            </h4>
+                            <span style="font-weight: 700; color: #a1a1ff; font-size: 11px; background: rgba(161, 161, 255, 0.12); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(161, 161, 255, 0.2);">12:00 - 13:00</span>
+                        </div>
+                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.45;">Derslere kısa bir ara vererek yemek yiyor ve dinleniyorum.</p>
                     </div>
                 </div>
-                <div style="display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 15px;">
-                    <span style="font-weight: bold; color: #a1a1ff; min-width: 90px; font-size: 14px;">🏫 13:00 - 16:00</span>
-                    <div>
-                        <h4 style="margin: 0 0 4px 0; color: #ffffff; font-size: 14px;">Öğleden Sonra Dersleri</h4>
-                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.4;">Okul derslerim saat 16:00'da son bulana kadar eğitimime devam ediyorum.</p>
+
+                <!-- Aktivite 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="routine-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 5px;">
+                            <h4 style="margin: 0; color: #ffffff; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                <span>🏫</span> Öğleden Sonra Dersleri
+                            </h4>
+                            <span style="font-weight: 700; color: #a1a1ff; font-size: 11px; background: rgba(161, 161, 255, 0.12); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(161, 161, 255, 0.2);">13:00 - 16:00</span>
+                        </div>
+                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.45;">Okul derslerim saat 16:00'da son bulana kadar eğitimime devam ediyorum.</p>
                     </div>
                 </div>
-                <div style="display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 15px;">
-                    <span style="font-weight: bold; color: #a1a1ff; min-width: 90px; font-size: 14px;">🏀 16:00 - 19:30</span>
-                    <div>
-                        <h4 style="margin: 0 0 4px 0; color: #ffffff; font-size: 14px;">Dışarı Aktivitesi & Basketbol</h4>
-                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.4;">Okul çıkışında kafa dağıtmak için dışarıda geziyorum veya sahada basketbol oynuyorum.</p>
+
+                <!-- Aktivite 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="routine-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 5px;">
+                            <h4 style="margin: 0; color: #ffffff; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                <span>🏀</span> Dışarı Aktivitesi & Basketbol
+                            </h4>
+                            <span style="font-weight: 700; color: #a1a1ff; font-size: 11px; background: rgba(161, 161, 255, 0.12); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(161, 161, 255, 0.2);">16:00 - 19:30</span>
+                        </div>
+                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.45;">Okul çıkışında kafa dağıtmak için dışarıda geziyorum veya sahada basketbol oynuyorum.</p>
                     </div>
                 </div>
-                <div style="display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 15px;">
-                    <span style="font-weight: bold; color: #a1a1ff; min-width: 90px; font-size: 14px;">🎮 19:30 - 23:30</span>
-                    <div>
-                        <h4 style="margin: 0 0 4px 0; color: #ffffff; font-size: 14px;">Yurtta FC 26 & Arkadaşlarla Eğlence</h4>
-                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.4;">Akşam yurda geldiğimde arkadaşlarımla birlikte eğlenceli ve heyecanlı FC 26 maçları yapıyoruz.</p>
+
+                <!-- Aktivite 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="routine-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 5px;">
+                            <h4 style="margin: 0; color: #ffffff; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                <span>🎮</span> Yurtta FC 26 & Arkadaşlarla Eğlence
+                            </h4>
+                            <span style="font-weight: 700; color: #a1a1ff; font-size: 11px; background: rgba(161, 161, 255, 0.12); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(161, 161, 255, 0.2);">19:30 - 23:30</span>
+                        </div>
+                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.45;">Akşam yurda geldiğimde arkadaşlarımla birlikte eğlenceli ve heyecanlı FC 26 maçları yapıyoruz.</p>
                     </div>
                 </div>
-                <div style="display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 15px;">
-                    <span style="font-weight: bold; color: #a1a1ff; min-width: 90px; font-size: 14px;">📱 23:30 - 02:00</span>
-                    <div>
-                        <h4 style="margin: 0 0 4px 0; color: #ffffff; font-size: 14px;">Yatakta Dinlenme & Serbest Zaman</h4>
-                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.4;">FC 26 bittikten sonra yatağımda uzanıp telefonda takılarak veya müzik dinleyerek vakit geçiriyorum.</p>
+
+                <!-- Aktivite 6 -->
+                <div class="timeline-item">
+                    <div class="timeline-node"></div>
+                    <div class="routine-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 5px;">
+                            <h4 style="margin: 0; color: #ffffff; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                <span>📱</span> Yatakta Dinlenme & Serbest Zaman
+                            </h4>
+                            <span style="font-weight: 700; color: #a1a1ff; font-size: 11px; background: rgba(161, 161, 255, 0.12); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(161, 161, 255, 0.2);">23:30 - 01:00</span>
+                        </div>
+                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.45;">FC 26 bittikten sonra yatağımda uzanıp telefonda takılarak veya müzik dinleyerek vakit geçiriyorum.</p>
                     </div>
                 </div>
-                <div style="display: flex; gap: 15px; align-items: flex-start; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 15px;">
-                    <span style="font-weight: bold; color: #a1a1ff; min-width: 90px; font-size: 14px;">🛌 02:00 - 08:30</span>
-                    <div>
-                        <h4 style="margin: 0 0 4px 0; color: #ffffff; font-size: 14px;">Gece Uykusu</h4>
-                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.4;">Yeni güne enerjik uyanabilmek için gece saat 2 gibi uykuya dalıyorum.</p>
+
+                <!-- Aktivite 7 -->
+                <div class="timeline-item" style="margin-bottom: 0;">
+                    <div class="timeline-node" style="border-color: #6c6cbf; box-shadow: 0 0 8px #6c6cbf;"></div>
+                    <div class="routine-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 5px;">
+                            <h4 style="margin: 0; color: #ffffff; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                <span>🛌</span> Gece Uykusu
+                            </h4>
+                            <span style="font-weight: 700; color: #a1a1ff; font-size: 11px; background: rgba(161, 161, 255, 0.12); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(161, 161, 255, 0.2);">01:00 - 08:30</span>
+                        </div>
+                        <p style="margin: 0; font-size: 12px; color: #b0b0cf; line-height: 1.45;">Yeni güne enerjik uyanabilmek için gece saat 1 gibi uykuya dalıyorum.</p>
                     </div>
                 </div>
             </div>
