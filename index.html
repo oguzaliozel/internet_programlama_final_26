@@ -615,6 +615,38 @@
         .os-win-max { background: #27c93f; }
         .os-window-content { flex: 1; overflow-y: auto; padding: 20px; }
 
+        /* Welcome Widget & Modal */
+        #quick-tour-widget {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        #quick-tour-widget:hover {
+            transform: translateX(-50%) scale(1.02);
+            border-color: rgba(255, 215, 0, 0.45) !important;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45), 0 0 20px rgba(255, 215, 0, 0.15) !important;
+        }
+        #quick-tour-widget button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(255, 215, 0, 0.35);
+            background: linear-gradient(135deg, #fff2b2, #ffd700) !important;
+        }
+        @media (max-width: 600px) {
+            #quick-tour-widget {
+                padding: 6px 8px 6px 12px !important;
+                gap: 8px !important;
+                top: 15px !important;
+                width: 90% !important;
+                justify-content: space-between !important;
+            }
+            #quick-tour-widget .tour-text {
+                font-size: 11px !important;
+            }
+            #quick-tour-widget button {
+                padding: 6px 10px !important;
+                font-size: 11px !important;
+                flex-shrink: 0 !important;
+            }
+        }
+
     </style>
 </head>
 <body class="night-mode">
@@ -1274,6 +1306,20 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
         </div>
     </div>
 
+    <!-- Hızlı Sinematik Oda Turu Başlatma Widget'ı (Üst Ortada Sabit) -->
+    <div id="quick-tour-widget" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 15px; background: rgba(13, 13, 38, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; padding: 6px 6px 6px 18px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 215, 0, 0.05); color: white; font-family: 'Inter', sans-serif;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 16px;">🎬</span>
+            <span class="tour-text" style="font-size: 13px; font-weight: 500; letter-spacing: 0.2px; color: #e0e0f0;">
+                Odayı tanımak için <strong style="color: #ffd700;">Sinematik Oda Turu</strong>'nu başlatın!
+            </span>
+        </div>
+        <button onclick="startCinematicTourFromWidget()" style="background: linear-gradient(135deg, #ffe066, #ffd700); border: none; color: #070714; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: bold; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2); display: flex; align-items: center; gap: 6px;">
+            <span>Turu Başlat</span>
+            <span style="font-size: 10px;">▶</span>
+        </button>
+    </div>
+
     <!-- Sinematik Oda Turu Alt Kontrol Paneli -->
     <div id="tour-overlay" style="display: none; position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(13, 13, 38, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 215, 0, 0.35); border-radius: 16px; padding: 18px 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255, 215, 0, 0.15); z-index: 9999; max-width: 500px; width: 90%; color: white; flex-direction: column; gap: 12px; transition: opacity 0.3s ease;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -1293,6 +1339,40 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             </div>
             
             <button onclick="nextTourStep()" style="background: linear-gradient(135deg, #ffe066, #ffd700); border: none; color: #070714; border-radius: 6px; padding: 6px 12px; font-size: 12px; font-weight: bold; cursor: pointer; transition: all 0.2s; min-width: 80px; box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);">Sonraki</button>
+        </div>
+    </div>
+
+    <!-- Hoş Geldiniz Modalı (Onboarding / Welcome Dialog) -->
+    <div id="welcome-modal" class="modal">
+        <div class="modal-content" style="max-width: 520px; border-color: #ffd700; box-shadow: 0 0 40px rgba(255, 215, 0, 0.25), inset 0 0 15px rgba(255, 255, 255, 0.05); text-align: center; padding: 35px 30px; background: linear-gradient(135deg, rgba(20, 20, 45, 0.96), rgba(10, 10, 25, 0.98));">
+            <span class="close-btn" onclick="closeWelcomeModal()">&times;</span>
+            <div style="font-size: 50px; margin-bottom: 15px; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.3));">✨</div>
+            <h2 style="background: linear-gradient(90deg, #ffe066, #ffd700); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 10px 0; font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 800;">3D Sanal Dünyama Hoş Geldiniz!</h2>
+            <p style="color: #a1a1ff; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 20px 0;">Oğuz Ali Özel - İnternet Programlama Final Projesi</p>
+            
+            <p style="color: #b0b0cf; font-size: 14px; line-height: 1.6; margin-bottom: 25px; text-align: left;">
+                Bu 3 boyutlu interaktif odada benim ilgi alanlarımı, projelerimi ve günlük rutinlerimi keşfedebilirsiniz. 
+                Odayı tanımak ve tüm detayları sırasıyla gezmek için rehberli **Sinematik Oda Turu**'nu başlatabilir veya kendiniz serbestçe gezebilirsiniz.
+            </p>
+            
+            <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07); border-radius: 12px; padding: 15px; margin-bottom: 30px; text-align: left;">
+                <h4 style="margin: 0 0 8px 0; color: #ffd700; font-size: 13px; font-weight: bold; display: flex; align-items: center; gap: 6px;">
+                    <span>💡</span> Keşif İpuçları:
+                </h4>
+                <ul style="margin: 0; padding-left: 18px; color: #a0a0cf; font-size: 12px; line-height: 1.6; display: flex; flex-direction: column; gap: 4px;">
+                    <li><strong>Sol Sidebar Menüsü:</strong> Tüm etkileşimli nesnelerin listesine sol kenardaki tabı açarak erişebilirsiniz.</li>
+                    <li><strong>Tıklanabilir Nesneler:</strong> Çalışma Masası Monitörü, Zeka Küpü, Yatak, Marshall Amfi ve Başucu Lambasına tıklayarak özel modal/ekranları açabilirsiniz.</li>
+                </ul>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button onclick="startCinematicTourFromWelcome()" style="background: linear-gradient(135deg, #ffe066, #ffd700); border: none; color: #070714; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: bold; padding: 12px 24px; border-radius: 25px; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 5px 20px rgba(255, 215, 0, 0.25); display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+                    <span>🎬</span> Sinematik Oda Turunu Başlat
+                </button>
+                <button onclick="closeWelcomeModal()" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.15); color: #b0b0cf; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: bold; padding: 10px 24px; border-radius: 25px; cursor: pointer; transition: all 0.22s ease; width: 100%;">
+                    Odayı Kendim Gezeceğim
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1943,7 +2023,10 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             const loadingScreen = document.getElementById('loading-screen');
             if (loadingScreen) {
                 loadingScreen.style.opacity = '0';
-                setTimeout(() => loadingScreen.style.display = 'none', 500);
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    openWelcomeModal();
+                }, 500);
             }
         }, (xhr) => {
             // Yükleme yüzdesi ve durum göstergelerini güncelle
@@ -2700,6 +2783,9 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             if (false) {
                 closeProjectModal();
             }
+            if (e.target === document.getElementById('welcome-modal')) {
+                closeWelcomeModal();
+            }
             if (e.target === hobModal) {
                 closeHobbiesModal();
             }
@@ -2728,6 +2814,8 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if (false) {}
+                const welcomeM = document.getElementById('welcome-modal');
+                if (welcomeM && welcomeM.classList.contains('show')) closeWelcomeModal();
                 if (hobModal.classList.contains('show')) closeHobbiesModal();
                 if (routModal.classList.contains('show')) closeRoutineModal();
                 if (dreamModal.classList.contains('show')) closeDreamsModal();
@@ -3771,6 +3859,37 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             }
         ];
 
+        function openWelcomeModal() {
+            const modal = document.getElementById('welcome-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
+            }
+        }
+
+        function closeWelcomeModal() {
+            const modal = document.getElementById('welcome-modal');
+            if (modal) {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 300);
+            }
+        }
+
+        function startCinematicTourFromWelcome() {
+            closeWelcomeModal();
+            setTimeout(() => {
+                startCinematicTour();
+            }, 350);
+        }
+
+        function startCinematicTourFromWidget() {
+            startCinematicTour();
+        }
+
         function startCinematicTour() {
             // Açık olan tüm modalları kapat
             closeOSModal();
@@ -3799,6 +3918,15 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
                 overlay.style.opacity = '1';
             }
 
+            // Hızlı Başlangıç Widget'ını gizle
+            const widget = document.getElementById('quick-tour-widget');
+            if (widget) {
+                widget.style.opacity = '0';
+                setTimeout(() => {
+                    if (isTourActive) widget.style.display = 'none';
+                }, 300);
+            }
+
             activateTourStop(0);
         }
 
@@ -3813,6 +3941,15 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             // Paneli gizle
             const overlay = document.getElementById('tour-overlay');
             if (overlay) overlay.style.display = 'none';
+
+            // Hızlı Başlangıç Widget'ını tekrar göster
+            const widget = document.getElementById('quick-tour-widget');
+            if (widget) {
+                widget.style.display = 'flex';
+                setTimeout(() => {
+                    if (!isTourActive) widget.style.opacity = '1';
+                }, 10);
+            }
 
             // Kamerayı eski haline yumuşakça geri döndür
             let steps = 0;
