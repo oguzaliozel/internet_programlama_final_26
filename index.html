@@ -2396,6 +2396,7 @@ Karmaşık problemleri çözmeyi ve yenilikçi arayüzler tasarlamayı seviyorum
             document.querySelectorAll('.os-window').forEach(w => w.style.display = 'none');
         }
         function openOSWindow(id) {
+            openOSModal();
             if(id === 'github-window') fetchGitHubData();
             const win = document.getElementById(id);
             if (win.style.display !== 'flex') {
